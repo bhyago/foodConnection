@@ -40,3 +40,41 @@ model Deliveries {
 
   @@map("deliveries")
 }
+
+model Company {
+  id             String           @id @default(uuid())
+  name           String           @db.VarChar(60)
+  legalname      String           @db.VarChar(100)
+  descriptiom    String?          @db.VarChar(500)
+  logo           String?          @db.Text
+  cnpj           String           @unique @db.VarChar(14)
+  type           String @db.VarChar(12)
+  password       String           @db.VarChar(100)
+  email          String           @db.VarChar(100)
+  phone          String           @db.VarChar(32)
+  active         Boolean
+  created_at     DateTime         @default(now())
+  updated_at     DateTime?
+  CompanyAddress CompanyAddress[]
+
+  @@map("company")
+}
+
+model CompanyAddress {
+  id String @id @default(uuid())
+
+  id_company String
+  company    Company @relation(fields: [id_company], references: [id])
+
+  zipcode      String?  @db.VarChar(8)
+  street       String?  @db.VarChar(150)
+  number       String?  @db.VarChar(10)
+  complement   String?  @db.VarChar(50)
+  neighborhood String?  @db.VarChar(100)
+  city         String?  @db.VarChar(50)
+  state        String?  @db.VarChar(100)
+  created_at   DateTime @default(dbgenerated("(timezone('UTC'::text, now()))::timestamp(0) without time zone")) @db.Timestamp(6)
+  updated_at   DateTime
+
+  @@map("companyaddress")
+}
