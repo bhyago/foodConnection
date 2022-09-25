@@ -55,7 +55,7 @@ model Company {
   active         Boolean
   created_at     DateTime         @default(now())
   updated_at     DateTime?
-  CompanyAddress CompanyAddress[]
+  companyAddress CompanyAddress[]
 
   @@map("company")
 }
@@ -74,7 +74,7 @@ model CompanyAddress {
   city         String?  @db.VarChar(50)
   state        String?  @db.VarChar(100)
   created_at   DateTime @default(dbgenerated("(timezone('UTC'::text, now()))::timestamp(0) without time zone")) @db.Timestamp(6)
-  updated_at   DateTime
+  updated_at   DateTime?
 
   @@map("companyaddress")
 }
