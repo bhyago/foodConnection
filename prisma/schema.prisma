@@ -17,12 +17,41 @@ model DeliveryMan {
 }
 
 model Clients {
-  id         String       @id @default(uuid())
-  username   String       @unique
-  password   String
-  Deliveries Deliveries[]
+  id              String            @id @default(uuid())
+  username        String            @unique
+  password        String
+  email           String
+  Deliveries      Deliveries[]
+  created_at      DateTime          @default(dbgenerated("(timezone('UTC'::text, now()))::timestamp(0) without time zone")) @db.Timestamp(6)
+  updated_at      DateTime?
+  SurverysClients SurverysClients[]
 
   @@map("clients")
+}
+
+model Surverys {
+  id              String            @id @default(uuid())
+  title           String
+  description     String
+  created_at      DateTime          @default(dbgenerated("(timezone('UTC'::text, now()))::timestamp(0) without time zone")) @db.Timestamp(6)
+  SurverysClients SurverysClients[]
+
+  @@map("survery")
+}
+
+model SurverysClients {
+  id String @id @default(uuid())
+
+  id_client String
+  client    Clients @relation(fields: [id_client], references: [id])
+
+  id_survery String
+  survery    Surverys @relation(fields: [id_survery], references: [id])
+
+  value      Int
+  created_at DateTime @default(dbgenerated("(timezone('UTC'::text, now()))::timestamp(0) without time zone")) @db.Timestamp(6)
+
+  @@map("surverysclients")
 }
 
 model Deliveries {
@@ -48,7 +77,7 @@ model Company {
   descriptiom    String?          @db.VarChar(500)
   logo           String?          @db.Text
   cnpj           String           @unique @db.VarChar(14)
-  type           String @db.VarChar(12)
+  type           String           @db.VarChar(12)
   password       String           @db.VarChar(100)
   email          String           @db.VarChar(100)
   phone          String           @db.VarChar(32)
@@ -56,6 +85,11 @@ model Company {
   created_at     DateTime         @default(now())
   updated_at     DateTime?
   companyAddress CompanyAddress[]
+  Provider       Provider[]
+  // ProductionChain ProductionChain[]
+  FoodType       FoodType[]
+  Food           Food[]
+  Ingredient     Ingredient[]
 
   @@map("company")
 }
@@ -66,15 +100,232 @@ model CompanyAddress {
   id_company String
   company    Company @relation(fields: [id_company], references: [id])
 
-  zipcode      String?  @db.VarChar(8)
-  street       String?  @db.VarChar(150)
-  number       String?  @db.VarChar(10)
-  complement   String?  @db.VarChar(50)
-  neighborhood String?  @db.VarChar(100)
-  city         String?  @db.VarChar(50)
-  state        String?  @db.VarChar(100)
-  created_at   DateTime @default(dbgenerated("(timezone('UTC'::text, now()))::timestamp(0) without time zone")) @db.Timestamp(6)
+  zipcode      String?   @db.VarChar(8)
+  street       String?   @db.VarChar(150)
+  number       String?   @db.VarChar(10)
+  complement   String?   @db.VarChar(50)
+  neighborhood String?   @db.VarChar(100)
+  city         String?   @db.VarChar(50)
+  state        String?   @db.VarChar(100)
+  created_at   DateTime  @default(dbgenerated("(timezone('UTC'::text, now()))::timestamp(0) without time zone")) @db.Timestamp(6)
   updated_at   DateTime?
 
   @@map("companyaddress")
 }
+
+model Provider {
+  id         String  @id @default(uuid())
+  id_company String
+  company    Company @relation(fields: [id_company], references: [id])
+
+  name       String    @db.VarChar(100)
+  cnpj       String
+  area       String?   @db.VarChar(100)
+  active     Boolean
+  created_at DateTime  @default(dbgenerated("(timezone('UTC'::text, now()))::timestamp(0) without time zone")) @db.Timestamp(6)
+  updated_at DateTime?
+  // Production        Production[]
+  // Food              Food[]
+  // Supplie           Supplie[]
+  // Transport         Transport[]
+  // Commercialization Commercialization[]
+  // Storage           Storage[]
+
+  @@map("provider")
+}
+
+model FoodType {
+  id         String  @id @default(uuid())
+  type       String  @db.VarChar(100)
+  id_company String
+  company    Company @relation(fields: [id_company], references: [id])
+  Food       Food[]
+
+  @@map("foodtype")
+}
+
+model Food {
+  id          String  @id @default(uuid())
+  name        String  @db.VarChar(100)
+  description String? @db.VarChar(500)
+
+  id_company String
+  company    Company @relation(fields: [id_company], references: [id])
+
+  id_foodtype String
+  foodtype    FoodType @relation(fields: [id_foodtype], references: [id])
+
+  active     Boolean
+  created_at DateTime  @default(dbgenerated("(timezone('UTC'::text, now()))::timestamp(0) without time zone")) @db.Timestamp(6)
+  updated_at DateTime?
+
+  @@map("food")
+}
+
+model Ingredient {
+  id          String  @id @default(uuid())
+  name        String  @db.VarChar(100)
+  description String? @db.VarChar(500)
+
+  id_company String
+  company    Company   @relation(fields: [id_company], references: [id])
+  created_at DateTime  @default(dbgenerated("(timezone('UTC'::text, now()))::timestamp(0) without time zone")) @db.Timestamp(6)
+  updated_at DateTime?
+}
+
+// model Supplie {
+//   id          String   @id @default(uuid())
+//   name        String   @db.VarChar(100)
+//   id_provider String
+//   provider    Provider @relation(fields: [id_provider], references: [id])
+
+//   id_productionchain String
+//   productionchain    ProductionChain @relation(fields: [id_productionchain], references: [id])
+//   id_form            String?
+//   description        String          @db.VarChar(500)
+//   active             Boolean
+//   created_at         DateTime        @default(dbgenerated("(timezone('UTC'::text, now()))::timestamp(0) without time zone")) @db.Timestamp(6)
+//   updated_at         DateTime?
+
+//   Form Form[]
+
+//   @@map("supplie")
+// }
+
+// model Production {
+//   id          String   @id @default(uuid())
+//   name        String   @db.VarChar(100)
+//   id_provider String
+//   provider    Provider @relation(fields: [id_provider], references: [id])
+
+//   id_productionchain String
+//   productionchain    ProductionChain @relation(fields: [id_productionchain], references: [id])
+
+//   id_form     String?
+//   description String    @db.VarChar(500)
+//   active      Boolean
+//   datebegin   DateTime
+//   dateend     DateTime
+//   created_at  DateTime  @default(dbgenerated("(timezone('UTC'::text, now()))::timestamp(0) without time zone")) @db.Timestamp(6)
+//   updated_at  DateTime?
+
+//   Form Form[]
+
+//   @@map("production")
+// }
+
+// model Transport {
+//   id          String   @id @default(uuid())
+//   name        String   @db.VarChar(100)
+//   id_provider String
+//   provider    Provider @relation(fields: [id_provider], references: [id])
+
+//   id_productionchain String
+//   productionchain    ProductionChain @relation(fields: [id_productionchain], references: [id])
+
+//   id_form     String?
+//   description String    @db.VarChar(500)
+//   active      Boolean
+//   datebegin   DateTime
+//   dateend     DateTime
+//   created_at  DateTime  @default(dbgenerated("(timezone('UTC'::text, now()))::timestamp(0) without time zone")) @db.Timestamp(6)
+//   updated_at  DateTime?
+
+//   Form Form[]
+
+//   @@map("transport")
+// }
+
+// model Commercialization {
+//   id          String   @id @default(uuid())
+//   name        String   @db.VarChar(100)
+//   id_provider String
+//   provider    Provider @relation(fields: [id_provider], references: [id])
+
+//   id_productionchain String
+//   productionchain    ProductionChain @relation(fields: [id_productionchain], references: [id])
+
+//   id_form     String?
+//   description String    @db.VarChar(500)
+//   active      Boolean
+//   datebegin   DateTime
+//   dateend     DateTime
+//   created_at  DateTime  @default(dbgenerated("(timezone('UTC'::text, now()))::timestamp(0) without time zone")) @db.Timestamp(6)
+//   updated_at  DateTime?
+
+//   Form Form[]
+
+//   @@map("commercialization")
+// }
+
+// model Storage {
+//   id          String   @id @default(uuid())
+//   name        String   @db.VarChar(100)
+//   id_provider String
+//   provider    Provider @relation(fields: [id_provider], references: [id])
+
+//   id_productionchain String
+//   productionchain    ProductionChain @relation(fields: [id_productionchain], references: [id])
+
+//   id_form     String?
+//   description String    @db.VarChar(500)
+//   active      Boolean
+//   datebegin   DateTime
+//   dateend     DateTime
+//   created_at  DateTime  @default(dbgenerated("(timezone('UTC'::text, now()))::timestamp(0) without time zone")) @db.Timestamp(6)
+//   updated_at  DateTime?
+
+//   @@map("storage")
+// }
+
+// model Form {
+//   id String @id @default(uuid())
+
+//   id_productionchain String
+//   productionchain    ProductionChain @relation(fields: [id_productionchain], references: [id])
+
+//   id_supplie String
+//   supplie    Supplie @relation(fields: [id_supplie], references: [id])
+
+//   id_commercialization String
+//   commercialization    Commercialization @relation(fields: [id_commercialization], references: [id])
+
+//   id_production String
+//   production    Production @relation(fields: [id_production], references: [id])
+
+//   id_transport String
+//   transport    Transport @relation(fields: [id_transport], references: [id])
+
+//   name String @db.VarChar(100)
+
+//   id_form     String
+//   description String    @db.VarChar(500)
+//   active      Boolean
+//   created_at  DateTime  @default(dbgenerated("(timezone('UTC'::text, now()))::timestamp(0) without time zone")) @db.Timestamp(6)
+//   updated_at  DateTime?
+
+//   @@map("form")
+// }
+
+// model ProductionChain {
+//   id         String  @id @default(uuid())
+//   id_company String
+//   company    Company @relation(fields: [id_company], references: [id])
+
+//   name              String              @db.VarChar(100)
+//   quantity          Int
+//   active            Boolean
+//   datebegin         DateTime
+//   dateend           DateTime
+//   created_at        DateTime            @default(dbgenerated("(timezone('UTC'::text, now()))::timestamp(0) without time zone")) @db.Timestamp(6)
+//   updated_at        DateTime?
+//   Food              Food[]
+//   Supplie           Supplie[]
+//   Production        Production[]
+//   Transport         Transport[]
+//   Commercialization Commercialization[]
+//   Storage           Storage[]
+//   Form              Form[]
+
+//   @@map("productionchain")
+// }

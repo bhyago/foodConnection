@@ -1,0 +1,46 @@
+{
+    
+    "productionTypeId": 1 "cultivo",
+    "foodId": 1,
+    "ingredientesIds": [],
+    "description": "arroz branco tipo 1 com descrição teste",
+    "startDateTime": "22-10-2022",
+    "endDateTime": "22-10-2023",
+    "providers": {
+        "providerId": 1,
+        "providerTypeId": 3
+    },
+    "intervenções": [
+        {
+            "interveçãoTypeId": 1,
+            "description": "arroz branco tipo 1 com descrição teste",
+            "startDateTime": "22-10-2022",
+            "endDateTime": "22-10-2023" 
+        },
+        {
+            "interveçãoTypeId": 1,
+            "description": "arroz branco tipo 1 com descrição teste",
+            "startDateTime": "22-10-2022",
+            "endDateTime": "22-10-2023" 
+        }
+    ]
+    
+}
+
+// finalização production chain
+{
+    "productionId": 1,
+    "codLote": "",
+},
+
+
+
+"distribuição": {
+    "loteId": 2134,
+    "distribuidorId": 1,
+    "endereçoPartida": "",
+    "destinoFinal": "",
+    "rotaFeita": "",
+    "startDateTime": "",
+    "endDateTime": ""
+}
