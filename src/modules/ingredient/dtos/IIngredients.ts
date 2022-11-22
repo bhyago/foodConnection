@@ -2,6 +2,7 @@ export interface ICreateIngredient {
   name: string;
   description: string;
   companyId: string;
+  allergicIds: string[];
 }
 
 export interface IGetIngredient {

@@ -18,8 +18,8 @@ export class GetIngredientUseCase {
   ) {}
 
   async execute({
-    companyId,
     id,
+    companyId,
   }: IGetIngredient): Promise<IResponseIngredient> {
     const companyExists = await this.companyRepository.findById(companyId);
 
@@ -28,8 +28,8 @@ export class GetIngredientUseCase {
     }
 
     const ingredientExists = await this.ingredientRepository.findById(
-      companyId,
-      id
+      id,
+      companyId
     );
 
     if (!ingredientExists) {

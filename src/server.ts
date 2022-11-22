@@ -1,27 +1,27 @@
 import express, { NextFunction, Request, Response } from "express";
-import "express-async-errors"
+import "express-async-errors";
 
-import { routes } from "./routes";
-
+import { routes } from "./shared/infra/http/routes";
 
 const app = express();
 
-app.use(express.json())
+app.use(express.json());
 
 app.use(routes);
 
-app.use((err: Error, request: Request, response: Response, next: NextFunction) => {
-  if (err instanceof Error) {
-    return response.status(400).json({
-      message: err.message
-    })
+app.use(
+  (err: Error, request: Request, response: Response, next: NextFunction) => {
+    if (err instanceof Error) {
+      return response.status(400).json({
+        message: err.message,
+      });
+    }
+
+    return response.status(500).json({
+      status: "error",
+      message: "Internal server error",
+    });
   }
+);
 
-
-  return response.status(500).json({
-    status: "error",
-    message: "Internal server error"
-  })
-})
-
-app.listen(3000, () => console.log("Server is running"))
+app.listen(3000, () => console.log("Server is running"));

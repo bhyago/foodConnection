@@ -1,7 +1,6 @@
 import { ICompanyRepository } from "@modules/company/repositories/ICompanyRepository";
 import { ICreateFood } from "@modules/food/dtos/IFood";
 import { IFoodRepository } from "@modules/food/reposotories/IFoodRepository";
-import { hash } from "bcrypt";
 import { inject, injectable } from "tsyringe";
 
 import { AppError } from "@shared/errors/AppError";

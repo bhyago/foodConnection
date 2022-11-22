@@ -7,6 +7,7 @@ import { IIngredientRepository } from "@modules/ingredient/repositories/IIngredi
 import { inject, injectable } from "tsyringe";
 
 import { AppError } from "@shared/errors/AppError";
+import { prisma } from "@shared/infra/prisma";
 
 @injectable()
 export class CreateIngredientUseCase {
@@ -21,6 +22,7 @@ export class CreateIngredientUseCase {
     companyId,
     description,
     name,
+    allergicIds,
   }: ICreateIngredient): Promise<IResponseIngredient> {
     const companyExists = await this.companyRepository.findById(companyId);
 
@@ -32,6 +34,7 @@ export class CreateIngredientUseCase {
       companyId,
       description,
       name,
+      allergicIds,
     });
 
     return {

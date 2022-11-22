@@ -29,6 +29,7 @@ export class IngredientRepository implements IIngredientRepository {
     description,
     name,
     companyId,
+    allergicIds,
   }: ICreateIngredient): Promise<Ingredient> {
     const result = await prisma.ingredient.create({
       data: {
@@ -39,16 +40,42 @@ export class IngredientRepository implements IIngredientRepository {
       },
     });
 
+    if (allergicIds) {
+      allergicIds.forEach(async (id) => {
+        await prisma.ingredientAlergic.create({
+          data: {
+            ingredientId: result.id,
+            allergicId: id,
+          },
+        });
+      });
+    }
+
     return result;
   }
 
   async findById(id: string, companyId: string): Promise<Ingredient | null> {
+    console.log(id, companyId);
+
     const result = await prisma.ingredient.findFirst({
+      include: {
+        IngredientAlergic: {
+          select: {
+            allergic: {
+              select: {
+                id: true,
+                name: true,
+              },
+            },
+          },
+        },
+      },
       where: {
         id,
         id_company: companyId,
       },
     });
+
     return result;
   }
 
@@ -68,12 +95,21 @@ export class IngredientRepository implements IIngredientRepository {
         where: whereObj,
       }),
       prisma.ingredient.findMany({
+        include: {
+          IngredientAlergic: {
+            select: {
+              allergic: {
+                select: {
+                  id: true,
+                  name: true,
+                },
+              },
+            },
+          },
+        },
         where: whereObj,
         take: data.limit || undefined,
         skip: data.limit * (data.page > 0 ? data.page - 1 : 0) || undefined,
-        orderBy: {
-          [sortBy]: data.order || "desc",
-        },
       }),
     ]);
 

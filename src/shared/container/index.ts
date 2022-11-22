@@ -2,8 +2,18 @@ import { CompanyRepository } from "@modules/company/repositories/CompanyReposito
 import { ICompanyRepository } from "@modules/company/repositories/ICompanyRepository";
 import { FoodRepository } from "@modules/food/reposotories/FoodRepository";
 import { IFoodRepository } from "@modules/food/reposotories/IFoodRepository";
+import { FoodTBCARepository } from "@modules/foodTBCA/repositories/FoodTBCARepositroy";
+import { IFoodTBCARepository } from "@modules/foodTBCA/repositories/IFoodTBCARepository";
+import { IIngredientRepository } from "@modules/ingredient/repositories/IIngredientRepository";
+import { IngredientRepository } from "@modules/ingredient/repositories/IngredientRepository";
+import { IProductionChainRepository } from "@modules/productionChain/repositories/IProductionChainRepository";
+import { ProductionChainRepository } from "@modules/productionChain/repositories/ProductionChainRepository";
+import { IProductionTypeRepository } from "@modules/productionType/repositories/IProductionType";
+import { ProductionTypeRepository } from "@modules/productionType/repositories/ProductionTypeRepository";
 import { IProviderRepository } from "@modules/provider/repositories/IProviderRepository";
 import { ProviderRepository } from "@modules/provider/repositories/ProviderRepository";
+import { ITransportRepository } from "@modules/transport/repositories/ITransportRepository";
+import { TransportRepository } from "@modules/transport/repositories/TransportRepository";
 import { container } from "tsyringe";
 
 // import "@shared/container/providers";
@@ -19,3 +29,28 @@ container.registerSingleton<IProviderRepository>(
 );
 
 container.registerSingleton<IFoodRepository>("FoodRepository", FoodRepository);
+
+container.registerSingleton<IIngredientRepository>(
+  "IngredientRepository",
+  IngredientRepository
+);
+
+container.registerSingleton<IProductionTypeRepository>(
+  "ProductionTypeRepository",
+  ProductionTypeRepository
+);
+
+container.registerSingleton<IFoodTBCARepository>(
+  "FoodTBCARepository",
+  FoodTBCARepository
+);
+
+container.registerSingleton<ITransportRepository>(
+  "TransportRepository",
+  TransportRepository
+);
+
+container.registerSingleton<IProductionChainRepository>(
+  "ProductionChainRepository",
+  ProductionChainRepository
+);

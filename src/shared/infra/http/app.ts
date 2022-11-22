@@ -5,13 +5,13 @@ import "express-async-errors";
 import "@shared/container";
 import { AppError } from "@shared/errors/AppError";
 
-import { router } from "./routes";
+import { routes } from "./routes";
 
 const app = express();
 
 app.use(express.json());
 
-app.use(router);
+app.use(routes);
 
 app.use(
   (err: Error, request: Request, response: Response, next: NextFunction) => {

@@ -1,27 +1,80 @@
 export interface ICreateProductionChain {
   productionTypeId: string;
+  name: string;
   foodId: string;
   companyId: string;
-  IngredientIds: number[];
+  ingredientIds: string[];
   description: string;
   startDateTime: Date;
   endDateTime: Date;
-  providerIds: number[];
+  providerIds: string[];
+  quantity: number;
+}
+
+export interface IGetProductionChain {
+  id: string;
+  companyId: string;
+}
+
+export interface IListProductionChain {
+  companyId: string;
+  page: number;
+  order: string;
+  limit: number;
+  sortBy: string;
+  search?: string;
+}
+
+export interface IUpdateProductionChain {
+  id: string;
+  productionTypeId: string;
+  name: string;
+  foodId: string;
+  companyId: string;
+  ingredientIds: string[];
+  description: string;
+  startDateTime: Date;
+  endDateTime: Date;
+  providerIds: string[];
+  quantity: number;
 }
 
 // interventions: {
-//   interventionsTypeId: number;
+// productionChainId:
 //   description: string;
 //   startDateTime: Date;
 //   endDateTime: Date;
 // }[];
 
+// trasport {
+//   fabricationId:
+//   origem:
+//   destino:
+//   rota:
+//   startDateTime: Date;
+//   endDateTime: Date;
+// }
 
-foodCompositionTBCA
+// gluten
+// lactose
+// crustaceos
+// huevos
+// pescado
+// peixe
+// amendoim
+// soja
+// leite manifero
+// amendoa
+// avelã
+// castanha de caju
+// castanha do pará
+// mancadamia
+// nozes
+// pinoli
+// latex natural
+// gluten
 
-id
-description
-componeteId
-unidade
-Valor por 100g
-referecia
+// sem crud
+// alergicos:
+// id:
+// name:

@@ -70,9 +70,6 @@ class FoodRepository implements IFoodRepository {
         where: whereObj,
         take: data.limit || undefined,
         skip: data.limit * (data.page > 0 ? data.page - 1 : 0) || undefined,
-        orderBy: {
-          [sortBy]: data.order || "desc",
-        },
       }),
     ]);
 
