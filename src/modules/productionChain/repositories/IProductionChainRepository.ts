@@ -1,11 +1,4 @@
-import {
-  Fabrication,
-  Food,
-  IngredientProductionChain,
-  ProductionChain,
-  ProductionType,
-  ProviderProductionChain,
-} from "@prisma/client";
+import { ProductionChain } from "@prisma/client";
 
 import {
   ICreateProductionChain,
@@ -19,16 +12,7 @@ interface IProductionChainRepository {
     data: Omit<ICreateProductionChain, "ingredientIds" | "providerIds">
   ): Promise<ProductionChain>;
 
-  findById({ id, companyId }: IGetProductionChain): Promise<
-    | (ProductionChain & {
-        Fabrication: Fabrication[];
-        productiontype: ProductionType;
-        food: Food;
-        IngredientProductionChain: IngredientProductionChain[];
-        ProviderProductionChain: ProviderProductionChain[];
-      })
-    | null
-  >;
+  findById({ id, companyId }: IGetProductionChain): Promise<any>;
 
   listMany(data: IListProductionChain): Promise<[number, ProductionChain[]]>;
 

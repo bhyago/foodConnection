@@ -1,4 +1,5 @@
 import auth from "@config/auth";
+import { CompanyRepository } from "@modules/company/repositories/CompanyRepository";
 import { NextFunction, Request, Response } from "express";
 import { verify } from "jsonwebtoken";
 
@@ -14,6 +15,8 @@ export async function ensureAuthenticated(
 ) {
   const authHeader = request.headers.authorization;
 
+  const companyRepository = new CompanyRepository();
+
   if (!authHeader) {
     throw new Error("Token missing");
   }
@@ -21,10 +24,22 @@ export async function ensureAuthenticated(
   const [, token] = authHeader.split(" ");
 
   try {
-    const { sub: user_id } = verify(token, auth.secret_token) as IPayload;
+    const { sub: companyId } = verify(
+      token,
+      auth.secret_refresh_token
+    ) as IPayload;
+
+    const company = await companyRepository.findByCompanyIdAndRefreshToken(
+      companyId,
+      token
+    );
+
+    if (!company) {
+      throw new AppError("Company does not exists!", 401);
+    }
 
     request.user = {
-      id: user_id,
+      id: company.companyId,
     };
 
     next();

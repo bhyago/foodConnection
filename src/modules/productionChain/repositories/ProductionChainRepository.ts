@@ -20,23 +20,86 @@ import {
 import { IProductionChainRepository } from "./IProductionChainRepository";
 
 export class ProductionChainRepository implements IProductionChainRepository {
-  async findById({ companyId, id }: IGetProductionChain): Promise<
-    | (ProductionChain & {
-        Fabrication: Fabrication[];
-        productiontype: ProductionType;
-        food: Food;
-        IngredientProductionChain: IngredientProductionChain[];
-        ProviderProductionChain: ProviderProductionChain[];
-      })
-    | null
-  > {
+  async findById({ companyId, id }: IGetProductionChain): Promise<any> {
     const result = await prisma.productionChain.findFirst({
-      include: {
-        Fabrication: true,
-        productiontype: true,
-        food: true,
-        IngredientProductionChain: true,
-        ProviderProductionChain: true,
+      select: {
+        id: true,
+        name: true,
+        description: true,
+        endDateTime: true,
+        startDateTime: true,
+        quantity: true,
+        interventions: {
+          select: {
+            id: true,
+            description: true,
+            startDateTime: true,
+            endDateTime: true,
+          },
+        },
+        Fabrication: {
+          select: {
+            id: true,
+          },
+        },
+        productiontype: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
+        food: {
+          select: {
+            id: true,
+            description: true,
+            name: true,
+            FoodTBCA: {
+              select: {
+                id: true,
+              },
+            },
+            foodtype: {
+              select: {
+                id: true,
+                type: true,
+              },
+            },
+          },
+        },
+        ingredientProductionChain: {
+          select: {
+            ingredient: {
+              select: {
+                id: true,
+                name: true,
+                description: true,
+                vegan: true,
+                ingredientAllergic: {
+                  select: {
+                    allergic: {
+                      select: {
+                        id: true,
+                        name: true,
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+        providerProductionChain: {
+          select: {
+            provider: {
+              select: {
+                id: true,
+                name: true,
+                area: true,
+                cnpj: true,
+              },
+            },
+          },
+        },
       },
       where: {
         companyId,
@@ -64,8 +127,8 @@ export class ProductionChainRepository implements IProductionChainRepository {
           Fabrication: true,
           productiontype: true,
           food: true,
-          IngredientProductionChain: true,
-          ProviderProductionChain: true,
+          ingredientProductionChain: true,
+          providerProductionChain: true,
         },
         where: whereObj,
         take: data.limit || undefined,

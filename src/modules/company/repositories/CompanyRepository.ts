@@ -1,23 +1,60 @@
 import { ICompanyRepository } from "@modules/company/repositories/ICompanyRepository";
-import { Company, CompanyAddress } from "@prisma/client";
+import { Company, CompanyAddress, CompanyToken } from "@prisma/client";
+import { hash } from "bcrypt";
 import moment from "moment";
 
 import { prisma } from "@shared/infra/prisma";
 
+import { ICreateCompany, ICreateCompanyTokenDTO } from "../dtos/ICompany";
+
 class CompanyRepository implements ICompanyRepository {
-  async findByEmail(companyId: string, email: string): Promise<Company | null> {
-    const response = await prisma.company.findFirst({
+  async deleteRefreshTokenById(companyTokenId: string): Promise<void> {
+    await prisma.companyToken.delete({
       where: {
-        id: companyId,
+        id: companyTokenId,
+      },
+    });
+  }
+  async findByCompanyIdAndRefreshToken(
+    companyId: string,
+    refreshToken: string
+  ): Promise<CompanyToken | null> {
+    const result = await prisma.companyToken.findFirst({
+      where: {
+        companyId,
+        refreshToken,
+      },
+    });
+
+    return result;
+  }
+  async createToken({
+    companyId,
+    expiresDate,
+    refreshToken,
+  }: ICreateCompanyTokenDTO): Promise<CompanyToken> {
+    const result = await prisma.companyToken.create({
+      data: {
+        expiresDate,
+        refreshToken,
+        companyId,
+      },
+    });
+
+    return result;
+  }
+  async findByEmail(email: string): Promise<Company | null> {
+    const result = await prisma.company.findFirst({
+      where: {
         active: true,
         email,
       },
     });
-    return response;
+    return result;
   }
 
   async create(data: ICreateCompany): Promise<Company> {
-    const response = await prisma.company.create({
+    const result = await prisma.company.create({
       data: {
         active: true,
         cnpj: data.cnpj,
@@ -43,7 +80,7 @@ class CompanyRepository implements ICompanyRepository {
       },
     });
 
-    return response;
+    return result;
   }
 
   async findById(companyId: string): Promise<
@@ -52,7 +89,7 @@ class CompanyRepository implements ICompanyRepository {
       })
     | null
   > {
-    const response = await prisma.company.findFirst({
+    const result = await prisma.company.findFirst({
       include: {
         companyAddress: true,
       },
@@ -62,7 +99,7 @@ class CompanyRepository implements ICompanyRepository {
       },
     });
 
-    return response;
+    return result;
   }
 }
 

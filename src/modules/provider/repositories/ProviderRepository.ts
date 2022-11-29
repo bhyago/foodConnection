@@ -6,6 +6,8 @@ import { prisma } from "@shared/infra/prisma";
 
 export class ProviderRepository implements IProviderRepository {
   async update(data: IUpdateProvider): Promise<Provider> {
+    console.log(data);
+
     const response = await prisma.provider.update({
       data: {
         area: data.area,
@@ -26,17 +28,7 @@ export class ProviderRepository implements IProviderRepository {
     companyId,
     limit,
     page,
-    sortBy,
-    order,
-    search,
   }: IListProviders): Promise<[number, Provider[]]> {
-    const sortByOptions = {
-      id: "id",
-      name: "name",
-      registerDate: "created_at",
-      area: "area",
-    }[sortBy];
-
     const response = await prisma.$transaction([
       prisma.provider.count({
         where: {
@@ -49,26 +41,9 @@ export class ProviderRepository implements IProviderRepository {
         where: {
           id_company: companyId,
           active: true,
-          OR: [
-            {
-              cnpj: {
-                contains: search,
-                mode: "insensitive",
-              },
-            },
-            {
-              name: {
-                contains: search,
-                mode: "insensitive",
-              },
-            },
-          ],
         },
         take: limit || undefined,
         skip: limit * (page > 0 ? page - 1 : 0) || undefined,
-        orderBy: {
-          [sortByOptions || "id"]: order || "desc",
-        },
       }),
     ]);
 
@@ -76,8 +51,8 @@ export class ProviderRepository implements IProviderRepository {
   }
 
   async findById(
-    companyId: string,
-    providerId: string
+    providerId: string,
+    companyId: string
   ): Promise<Provider | null> {
     const response = await prisma.provider.findFirst({
       where: {

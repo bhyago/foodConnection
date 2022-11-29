@@ -16,6 +16,8 @@ export class IngredientRepository implements IIngredientRepository {
       data: {
         name: data.name,
         description: data.description,
+        vegan: data.vegan,
+        updated_at: moment().utc().format(),
       },
       where: {
         id: data.id,
@@ -28,6 +30,7 @@ export class IngredientRepository implements IIngredientRepository {
   async create({
     description,
     name,
+    vegan,
     companyId,
     allergicIds,
   }: ICreateIngredient): Promise<Ingredient> {
@@ -35,6 +38,7 @@ export class IngredientRepository implements IIngredientRepository {
       data: {
         name,
         description,
+        vegan,
         id_company: companyId,
         created_at: moment().utc().format(),
       },
@@ -42,7 +46,7 @@ export class IngredientRepository implements IIngredientRepository {
 
     if (allergicIds) {
       allergicIds.forEach(async (id) => {
-        await prisma.ingredientAlergic.create({
+        await prisma.ingredientAllergic.create({
           data: {
             ingredientId: result.id,
             allergicId: id,
@@ -54,12 +58,23 @@ export class IngredientRepository implements IIngredientRepository {
     return result;
   }
 
-  async findById(id: string, companyId: string): Promise<Ingredient | null> {
-    console.log(id, companyId);
-
+  async findById(
+    id: string,
+    companyId: string
+  ): Promise<
+    | (Ingredient & {
+        ingredientAllergic: {
+          allergic: {
+            id: string;
+            name: string;
+          };
+        }[];
+      })
+    | null
+  > {
     const result = await prisma.ingredient.findFirst({
       include: {
-        IngredientAlergic: {
+        ingredientAllergic: {
           select: {
             allergic: {
               select: {
@@ -79,7 +94,19 @@ export class IngredientRepository implements IIngredientRepository {
     return result;
   }
 
-  async findMany(data: IListIngredients): Promise<[number, Ingredient[]]> {
+  async findMany(data: IListIngredients): Promise<
+    [
+      number,
+      (Ingredient & {
+        ingredientAllergic: {
+          allergic: {
+            id: string;
+            name: string;
+          };
+        }[];
+      })[]
+    ]
+  > {
     const sortBy: string =
       {
         id: "id",
@@ -96,7 +123,7 @@ export class IngredientRepository implements IIngredientRepository {
       }),
       prisma.ingredient.findMany({
         include: {
-          IngredientAlergic: {
+          ingredientAllergic: {
             select: {
               allergic: {
                 select: {

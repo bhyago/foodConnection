@@ -11,6 +11,8 @@ export class UpdateProviderController {
 
     const updateProviderUseCase = container.resolve(UpdateProviderUseCase);
 
+    console.log(providerId);
+
     const result = await updateProviderUseCase.execute({
       companyId: String(companyId),
       providerId,

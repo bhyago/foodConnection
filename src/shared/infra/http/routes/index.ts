@@ -1,5 +1,7 @@
 import { Router } from "express";
 
+import { allergicRoutes } from "./allergic.routes";
+import { authenticateRoutes } from "./authenticate.routes";
 import { companyRoutes } from "./company.routes";
 import { fabricationRoutes } from "./fabrication.routes";
 import { foodRoutes } from "./foods.routes";
@@ -21,7 +23,8 @@ routes.use("/productiontype", productionTypeRoutes);
 routes.use("/food/tbca", foodTBCARoutes);
 routes.use("/fabrications", fabricationRoutes);
 routes.use("/interventions", interventionRoutes);
+routes.use("/allergic", allergicRoutes);
 
-// router.use(authenticateRoutes);
+routes.use(authenticateRoutes);
 
 export { routes };

@@ -1,3 +1,4 @@
+import { ICompanyRepository } from "@modules/company/repositories/ICompanyRepository";
 import { inject, injectable } from "tsyringe";
 
 import { AppError } from "@shared/errors/AppError";
@@ -8,13 +9,24 @@ import { IProviderRepository } from "../../repositories/IProviderRepository";
 export class UpdateProviderUseCase {
   constructor(
     @inject("ProviderRepository")
-    private providerRepository: IProviderRepository
+    private providerRepository: IProviderRepository,
+
+    @inject("CompanyRepository")
+    private companyRepository: ICompanyRepository
   ) {}
 
   async execute(data: IUpdateProvider): Promise<{ id: string }> {
+    const companyExists = await this.companyRepository.findById(data.companyId);
+
+    console.log(data);
+
+    if (!companyExists) {
+      throw new AppError("the informed company does not exist.");
+    }
+
     const providerExists = await this.providerRepository.findById(
-      data.companyId,
-      data.providerId
+      data.providerId,
+      data.companyId
     );
 
     if (!providerExists) {

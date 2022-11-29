@@ -1,3 +1,5 @@
+import { AllergicRepository } from "@modules/allergic/repository/AlergicRepository";
+import { IAllergicRepository } from "@modules/allergic/repository/IAllergicRepository";
 import { CompanyRepository } from "@modules/company/repositories/CompanyRepository";
 import { ICompanyRepository } from "@modules/company/repositories/ICompanyRepository";
 import { FoodRepository } from "@modules/food/reposotories/FoodRepository";
@@ -53,4 +55,9 @@ container.registerSingleton<ITransportRepository>(
 container.registerSingleton<IProductionChainRepository>(
   "ProductionChainRepository",
   ProductionChainRepository
+);
+
+container.registerSingleton<IAllergicRepository>(
+  "AllergicRepository",
+  AllergicRepository
 );

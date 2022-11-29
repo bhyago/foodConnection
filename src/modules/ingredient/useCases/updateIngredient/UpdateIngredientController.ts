@@ -7,7 +7,7 @@ export class UpdateIngredientController {
   async handle(request: Request, response: Response): Promise<Response> {
     const { id } = request.params;
     const { companyId } = request.query;
-    const { description, name } = request.body;
+    const { vegan, description, name } = request.body;
 
     const updateIngredientUseCase = container.resolve(UpdateIngredientUseCase);
 
@@ -16,6 +16,7 @@ export class UpdateIngredientController {
       id,
       description,
       name,
+      vegan,
     });
 
     return response.status(201).json(result);

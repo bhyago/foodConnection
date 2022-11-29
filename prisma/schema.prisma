@@ -7,55 +7,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model DeliveryMan {
-  id         String       @id @default(uuid())
-  username   String       @unique
-  password   String
-  Deliveries Deliveries[]
-
-  @@map("deliveryman")
-}
-model Surverys {
-  id              String            @id @default(uuid())
-  title           String
-  description     String
-  created_at      DateTime          @default(dbgenerated("(timezone('UTC'::text, now()))::timestamp(0) without time zone")) @db.Timestamp(6)
-  SurverysClients SurverysClients[]
-
-  @@map("survery")
-}
-
-model SurverysClients {
-  id String @id @default(uuid())
-
-  id_client String
-  client    Clients @relation(fields: [id_client], references: [id])
-
-  id_survery String
-  survery    Surverys @relation(fields: [id_survery], references: [id])
-
-  value      Int
-  created_at DateTime @default(dbgenerated("(timezone('UTC'::text, now()))::timestamp(0) without time zone")) @db.Timestamp(6)
-
-  @@map("surverysclients")
-}
-
-model Deliveries {
-  id String @id @default(uuid())
-
-  id_client String
-  client    Clients @relation(fields: [id_client], references: [id])
-
-  id_deliveryman String
-  deliveryman    DeliveryMan @relation(fields: [id_deliveryman], references: [id])
-
-  item_name  String
-  created_at DateTime @default(now())
-  end_at     DateTime @default(now())
-
-  @@map("deliveries")
-}
-
 model Company {
   id              String            @id @default(uuid())
   name            String            @db.VarChar(60)
@@ -67,6 +18,7 @@ model Company {
   password        String            @db.VarChar(100)
   email           String            @db.VarChar(100)
   phone           String            @db.VarChar(32)
+  typeId          String
   active          Boolean
   created_at      DateTime          @default(now())
   updated_at      DateTime?
@@ -77,8 +29,18 @@ model Company {
   Ingredient      Ingredient[]
   ProductionChain ProductionChain[]
   ProductionType  ProductionType[]
+  CompanyToken    CompanyToken[]
+  companytype     CompanyType       @relation(fields: [typeId], references: [id])
 
   @@map("company")
+}
+
+model CompanyType {
+  id      String    @id @default(uuid())
+  type    String
+  Company Company[]
+
+  @@map("companytype")
 }
 
 model CompanyAddress {
@@ -98,6 +60,37 @@ model CompanyAddress {
   updated_at   DateTime?
 
   @@map("companyaddress")
+}
+
+model DishProductionChain {
+  id                      String                    @id @default(uuid())
+  name                    String                    @db.VarChar(100)
+  description             String                    @db.VarChar(500)
+  BashDishProductionChain BashDishProductionChain[]
+
+  @@map("dishproductionchain")
+}
+
+model BashDishProductionChain {
+  id String @id @default(uuid())
+
+  dishProductionChainId String
+  productionChainId     String
+  active                Boolean
+
+  dishproductionchain DishProductionChain @relation(fields: [dishProductionChainId], references: [id])
+  productionChain     ProductionChain     @relation(fields: [productionChainId], references: [id])
+}
+
+model CompanyToken {
+  id           String   @id @default(uuid())
+  refreshToken String   @db.VarChar()
+  companyId    String
+  expiresDate  DateTime @db.Timestamp(6)
+  created_at   DateTime @default(dbgenerated("(timezone('UTC'::text, now()))::timestamp(0) without time zone")) @db.Timestamp(6)
+  company      Company  @relation(fields: [companyId], references: [id])
+
+  @@map("companytoken")
 }
 
 model Provider {
@@ -141,14 +134,14 @@ model Food {
   created_at      DateTime          @default(dbgenerated("(timezone('UTC'::text, now()))::timestamp(0) without time zone")) @db.Timestamp(6)
   updated_at      DateTime?
   ProductionChain ProductionChain[]
-  FoodTBCA        FoodTBCA[]
+  FoodTBCA        FoodTBCA?
 
   @@map("food")
 }
 
 model FoodTBCA {
   id          String @id @default(uuid())
-  foodId      String
+  foodId      String @unique
   unity       String @db.VarChar(3)
   valueBy100g Int
   food        Food   @relation(fields: [foodId], references: [id])
@@ -157,9 +150,9 @@ model FoodTBCA {
 }
 
 model Allergic {
-  id                String              @id @default(uuid())
-  name              String              @db.VarChar(100)
-  IngredientAlergic IngredientAlergic[]
+  id                String               @id @default(uuid())
+  name              String               @db.VarChar(100)
+  IngredientAlergic IngredientAllergic[]
 
   @@map("allergic")
 }
@@ -174,17 +167,18 @@ model Ingredient {
   company                   Company                     @relation(fields: [id_company], references: [id])
   created_at                DateTime                    @default(dbgenerated("(timezone('UTC'::text, now()))::timestamp(0) without time zone")) @db.Timestamp(6)
   updated_at                DateTime?
-  IngredientProductionChain IngredientProductionChain[]
-  IngredientAlergic         IngredientAlergic[]
+  ingredientProductionChain IngredientProductionChain[]
+  ingredientAllergic        IngredientAllergic[]
 }
 
-model IngredientAlergic {
+model IngredientAllergic {
   ingredientId String
   allergicId   String
   allergic     Allergic   @relation(fields: [allergicId], references: [id])
   ingredient   Ingredient @relation(fields: [ingredientId], references: [id])
 
   @@id([ingredientId, allergicId])
+  @@map("ingredientallergic")
 }
 
 model ProductionType {
@@ -211,14 +205,15 @@ model ProductionChain {
   updatedAt        DateTime?
 
   foodId                    String
-  IngredientProductionChain IngredientProductionChain[]
-  ProviderProductionChain   ProviderProductionChain[]
+  ingredientProductionChain IngredientProductionChain[]
+  providerProductionChain   ProviderProductionChain[]
 
-  productiontype ProductionType  @relation(fields: [productionTypeId], references: [id])
-  company        Company         @relation(fields: [companyId], references: [id])
-  food           Food            @relation(fields: [foodId], references: [id])
-  Fabrication    Fabrication[]
-  interventions  Intervention[]
+  productiontype          ProductionType            @relation(fields: [productionTypeId], references: [id])
+  company                 Company                   @relation(fields: [companyId], references: [id])
+  food                    Food                      @relation(fields: [foodId], references: [id])
+  Fabrication             Fabrication[]
+  interventions           Intervention[]
+  BashDishProductionChain BashDishProductionChain[]
 
   @@map("productionchain")
 }
@@ -231,7 +226,7 @@ model IngredientProductionChain {
   ingredient      Ingredient      @relation(fields: [ingredientId], references: [id])
 
   @@id([productionChainId, ingredientId])
-  @@map("ingredient_productionChain")
+  @@map("ingredientproductionchain")
 }
 
 model ProviderProductionChain {

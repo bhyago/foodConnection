@@ -23,7 +23,8 @@ export class UpdateIngredientUseCase {
     companyId,
     description,
     name,
-  }: IUpdateIngredient): Promise<IResponseIngredient> {
+    vegan,
+  }: IUpdateIngredient): Promise<Omit<IResponseIngredient, "allergic">> {
     const companyExists = await this.companyRepository.findById(companyId);
 
     if (!companyExists) {
@@ -44,12 +45,15 @@ export class UpdateIngredientUseCase {
       description,
       id,
       name,
+      vegan,
     });
 
     return {
       id: response.id,
       description: response.description,
       name: response.name,
+      vegan: response.vegan,
+      updatedDate: response.updated_at?.toISOString(),
       registerDate: response.created_at.toISOString(),
     };
   }

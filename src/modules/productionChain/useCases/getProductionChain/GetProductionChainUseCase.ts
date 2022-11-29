@@ -1,9 +1,5 @@
 import { ICompanyRepository } from "@modules/company/repositories/ICompanyRepository";
-import { IFoodRepository } from "@modules/food/reposotories/IFoodRepository";
-import {
-  ICreateProductionChain,
-  IGetProductionChain,
-} from "@modules/productionChain/dtos/IProductionChain";
+import { IGetProductionChain } from "@modules/productionChain/dtos/IProductionChain";
 import { IProductionChainRepository } from "@modules/productionChain/repositories/IProductionChainRepository";
 import { ProductionChain } from "@prisma/client";
 import { inject, injectable } from "tsyringe";

@@ -1,3 +1,4 @@
+import { ICompanyRepository } from "@modules/company/repositories/ICompanyRepository";
 import { Provider } from "@prisma/client";
 import { inject, injectable } from "tsyringe";
 
@@ -9,10 +10,18 @@ import { IProviderRepository } from "../../repositories/IProviderRepository";
 export class GetProviderUseCase {
   constructor(
     @inject("ProviderRepository")
-    private providerRepository: IProviderRepository
+    private providerRepository: IProviderRepository,
+    @inject("CompanyRepository")
+    private companyRepository: ICompanyRepository
   ) {}
 
   async execute({ companyId, providerId }: IGetProvider): Promise<Provider> {
+    const companyExists = await this.companyRepository.findById(companyId);
+
+    if (!companyExists) {
+      throw new AppError("the informed company does not exist.");
+    }
+
     const provider = await this.providerRepository.findById(
       providerId,
       companyId

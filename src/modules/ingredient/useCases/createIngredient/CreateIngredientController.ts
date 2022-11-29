@@ -5,7 +5,7 @@ import { CreateIngredientUseCase } from "./CreateIngredientUseCase";
 
 export class CreateIngredientController {
   async handle(request: Request, response: Response): Promise<Response> {
-    const { description, name, allergicIds } = request.body;
+    const { vegan, description, name, allergicIds } = request.body;
 
     const { companyId } = request.query;
 
@@ -15,6 +15,7 @@ export class CreateIngredientController {
       companyId: String(companyId),
       description,
       name,
+      vegan,
       allergicIds,
     });
 

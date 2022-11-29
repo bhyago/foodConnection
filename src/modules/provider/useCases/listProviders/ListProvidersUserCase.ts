@@ -19,6 +19,12 @@ export class ListProvidersUseCase {
   async execute(
     data: IListProviders
   ): Promise<{ data: Provider[]; total: number }> {
+    const companyExists = await this.companyRepository.findById(data.companyId);
+
+    if (!companyExists) {
+      throw new AppError("the informed company does not exist.");
+    }
+
     const providers = await this.providerRepository.listProviders(data);
 
     return {

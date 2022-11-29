@@ -3,6 +3,7 @@ import { inject, injectable } from "tsyringe";
 
 import { AppError } from "@shared/errors/AppError";
 
+import { ICreateCompany } from "../dtos/ICompany";
 import { ICompanyRepository } from "../repositories/ICompanyRepository";
 
 @injectable()

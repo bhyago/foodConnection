@@ -7,7 +7,6 @@ import { IIngredientRepository } from "@modules/ingredient/repositories/IIngredi
 import { inject, injectable } from "tsyringe";
 
 import { AppError } from "@shared/errors/AppError";
-import { prisma } from "@shared/infra/prisma";
 
 @injectable()
 export class CreateIngredientUseCase {
@@ -23,7 +22,8 @@ export class CreateIngredientUseCase {
     description,
     name,
     allergicIds,
-  }: ICreateIngredient): Promise<IResponseIngredient> {
+    vegan,
+  }: ICreateIngredient): Promise<Omit<IResponseIngredient, "allergic">> {
     const companyExists = await this.companyRepository.findById(companyId);
 
     if (!companyExists) {
@@ -35,12 +35,14 @@ export class CreateIngredientUseCase {
       description,
       name,
       allergicIds,
+      vegan,
     });
 
     return {
       id: response.id,
       description: response.description,
       name: response.name,
+      vegan: response.vegan,
       registerDate: response.created_at.toISOString(),
     };
   }

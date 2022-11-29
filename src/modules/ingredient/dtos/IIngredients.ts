@@ -2,6 +2,7 @@ export interface ICreateIngredient {
   name: string;
   description: string;
   companyId: string;
+  vegan: boolean;
   allergicIds: string[];
 }
 
@@ -13,8 +14,16 @@ export interface IGetIngredient {
 export interface IResponseIngredient {
   id: string;
   name: string;
+  vegan: boolean;
   description: string | null;
+  allergic:
+    | {
+        id: string;
+        name: string;
+      }[]
+    | null;
   registerDate: string;
+  updatedDate?: string;
 }
 
 export interface IUpdateIngredient {
@@ -22,6 +31,7 @@ export interface IUpdateIngredient {
   companyId: string;
   name: string;
   description: string;
+  vegan: boolean;
 }
 
 export interface IListIngredients {

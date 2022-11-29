@@ -40,6 +40,13 @@ export class GetIngredientUseCase {
       id: ingredientExists.id,
       description: ingredientExists.description,
       name: ingredientExists.name,
+      vegan: ingredientExists.vegan,
+      allergic: ingredientExists.IngredientAlergic.length
+        ? ingredientExists.IngredientAlergic.map((allergic) => ({
+            id: allergic.allergic.id,
+            name: allergic.allergic.name,
+          }))
+        : null,
       registerDate: ingredientExists.created_at.toISOString(),
     };
   }

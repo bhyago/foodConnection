@@ -10,10 +10,18 @@ import { IProviderRepository } from "../../repositories/IProviderRepository";
 export class CreateProviderUseCase {
   constructor(
     @inject("ProviderRepository")
-    private providerRepository: IProviderRepository
+    private providerRepository: IProviderRepository,
+    @inject("CompanyRepository")
+    private companyRepository: ICompanyRepository
   ) {}
 
   async execute(data: IProvider): Promise<{ id: string }> {
+    const companyExists = await this.companyRepository.findById(data.companyId);
+
+    if (!companyExists) {
+      throw new AppError("the informed company does not exist.");
+    }
+
     const cnpjAlreadyExists = await this.providerRepository.findByCnpj(
       data.companyId,
       data.cnpj

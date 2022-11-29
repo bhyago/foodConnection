@@ -1,4 +1,4 @@
-interface ICreateCompany {
+export interface ICreateCompany {
   companyId: string;
   name: string;
   legalname: string;
@@ -18,4 +18,10 @@ interface ICreateCompany {
     city: string;
     state: string;
   };
+}
+
+export interface ICreateCompanyTokenDTO {
+  companyId: string;
+  expiresDate: Date;
+  refreshToken: string;
 }
