@@ -8,7 +8,7 @@ import { inject, injectable } from "tsyringe";
 import { AppError } from "@shared/errors/AppError";
 
 @injectable()
-export class GetBashDishProductionChainUseCase {
+export class DeleteBashDishProductionChainUseCase {
   constructor(
     @inject("DishRepository")
     private DishRepository: IDishRepository,
@@ -23,10 +23,7 @@ export class GetBashDishProductionChainUseCase {
     private ProductionChainRepository: IProductionChainRepository
   ) {}
 
-  async execute(data: {
-    id: string;
-    companyId: string;
-  }): Promise<BashDishProductionChain | null> {
+  async execute(data: { id: string; companyId: string }): Promise<void> {
     const companyExists = await this.CompanyRepository.findById(data.companyId);
 
     if (!companyExists) {
@@ -47,11 +44,9 @@ export class GetBashDishProductionChainUseCase {
       throw new AppError("the bash dish production informad not found");
     }
 
-    const response = await this.BashDishProductionRepository.findById({
+    await this.BashDishProductionRepository.delete({
       companyId: data.companyId,
       id: data.id,
     });
-
-    return response;
   }
 }

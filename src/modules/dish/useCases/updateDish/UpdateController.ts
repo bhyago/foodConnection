@@ -17,6 +17,6 @@ export class UpdateDishController {
       name,
     });
 
-    return response.status(200).json(result);
+    return response.status(201).json(result);
   }
 }

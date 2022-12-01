@@ -2,6 +2,7 @@ import { Router } from "express";
 
 import { allergicRoutes } from "./allergic.routes";
 import { authenticateRoutes } from "./authenticate.routes";
+import { bashDishProductionChainRoutes } from "./bashDishProductionChain.routes";
 import { companyRoutes } from "./company.routes";
 import { companyTypesRoutes } from "./companyTypes.routes";
 import { componentTBCARoutes } from "./componentTBCA.routes";
@@ -30,6 +31,7 @@ routes.use("/allergic", allergicRoutes);
 routes.use("/company-types", companyTypesRoutes);
 routes.use("/component-tbca", componentTBCARoutes);
 routes.use("/dish", dishRoutes);
+routes.use("/bash-dish-production-chain", bashDishProductionChainRoutes);
 
 routes.use(authenticateRoutes);
 

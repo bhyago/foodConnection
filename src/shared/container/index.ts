@@ -1,9 +1,13 @@
 import { AllergicRepository } from "@modules/allergic/repository/AlergicRepository";
 import { IAllergicRepository } from "@modules/allergic/repository/IAllergicRepository";
+import { BashDishProductionChainRepository } from "@modules/bashDishProducionChain/repository/BashDishProductionChainRepository";
+import { IBashDishProductionChainRepository } from "@modules/bashDishProducionChain/repository/IBashDishProductionChainRepository";
 import { CompanyRepository } from "@modules/company/repositories/CompanyRepository";
 import { ICompanyRepository } from "@modules/company/repositories/ICompanyRepository";
 import { CompanyTypeRepository } from "@modules/companyType/repositories/CompanyTypeRepository";
 import { ICompanyTypeRepository } from "@modules/companyType/repositories/ICompanyTypeRepository";
+import { DishRepository } from "@modules/dish/repository/DishRepository";
+import { IDishRepository } from "@modules/dish/repository/IDishRepository";
 import { FoodRepository } from "@modules/food/reposotories/FoodRepository";
 import { IFoodRepository } from "@modules/food/reposotories/IFoodRepository";
 import { FoodTBCARepository } from "@modules/foodTBCA/repositories/FoodTBCARepositroy";
@@ -67,4 +71,11 @@ container.registerSingleton<IAllergicRepository>(
 container.registerSingleton<ICompanyTypeRepository>(
   "CompanyTypeRepository",
   CompanyTypeRepository
+);
+
+container.registerSingleton<IDishRepository>("DishRepository", DishRepository);
+
+container.registerSingleton<IBashDishProductionChainRepository>(
+  "BashDishProductionChainRepository",
+  BashDishProductionChainRepository
 );
