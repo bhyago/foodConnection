@@ -19,8 +19,8 @@ export class AllergicRepository implements IAllergicRepository {
 
   async findMany(data: IListAllergic): Promise<[number, Allergic[]]> {
     const result = await prisma.$transaction([
-      prisma.ingredient.count(),
-      prisma.ingredient.findMany({
+      prisma.allergic.count(),
+      prisma.allergic.findMany({
         take: data.limit || undefined,
         skip: data.limit * (data.page > 0 ? data.page - 1 : 0) || undefined,
       }),

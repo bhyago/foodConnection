@@ -2,6 +2,8 @@ import { AllergicRepository } from "@modules/allergic/repository/AlergicReposito
 import { IAllergicRepository } from "@modules/allergic/repository/IAllergicRepository";
 import { CompanyRepository } from "@modules/company/repositories/CompanyRepository";
 import { ICompanyRepository } from "@modules/company/repositories/ICompanyRepository";
+import { CompanyTypeRepository } from "@modules/companyType/repositories/CompanyTypeRepository";
+import { ICompanyTypeRepository } from "@modules/companyType/repositories/ICompanyTypeRepository";
 import { FoodRepository } from "@modules/food/reposotories/FoodRepository";
 import { IFoodRepository } from "@modules/food/reposotories/IFoodRepository";
 import { FoodTBCARepository } from "@modules/foodTBCA/repositories/FoodTBCARepositroy";
@@ -60,4 +62,9 @@ container.registerSingleton<IProductionChainRepository>(
 container.registerSingleton<IAllergicRepository>(
   "AllergicRepository",
   AllergicRepository
+);
+
+container.registerSingleton<ICompanyTypeRepository>(
+  "CompanyTypeRepository",
+  CompanyTypeRepository
 );

@@ -1,4 +1,9 @@
-import { Company, CompanyAddress, CompanyToken } from "@prisma/client";
+import {
+  Company,
+  CompanyAddress,
+  CompanyToken,
+  CompanyType,
+} from "@prisma/client";
 
 import { ICreateCompany, ICreateCompanyTokenDTO } from "../dtos/ICompany";
 
@@ -18,6 +23,7 @@ interface ICompanyRepository {
   findById(companyId: string): Promise<
     | (Company & {
         companyAddress: CompanyAddress[];
+        companytype: CompanyType;
       })
     | null
   >;

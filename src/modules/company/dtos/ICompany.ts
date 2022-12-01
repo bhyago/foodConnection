@@ -1,5 +1,6 @@
 export interface ICreateCompany {
   companyId: string;
+  typeId: string;
   name: string;
   legalname: string;
   description: string;

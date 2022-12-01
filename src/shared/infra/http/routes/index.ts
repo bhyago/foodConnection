@@ -3,6 +3,9 @@ import { Router } from "express";
 import { allergicRoutes } from "./allergic.routes";
 import { authenticateRoutes } from "./authenticate.routes";
 import { companyRoutes } from "./company.routes";
+import { companyTypesRoutes } from "./companyTypes.routes";
+import { componentTBCARoutes } from "./componentTBCA.routes";
+import { dishRoutes } from "./dish.routes";
 import { fabricationRoutes } from "./fabrication.routes";
 import { foodRoutes } from "./foods.routes";
 import { foodTBCARoutes } from "./foodTBCA.routes";
@@ -24,6 +27,9 @@ routes.use("/food/tbca", foodTBCARoutes);
 routes.use("/fabrications", fabricationRoutes);
 routes.use("/interventions", interventionRoutes);
 routes.use("/allergic", allergicRoutes);
+routes.use("/company-types", companyTypesRoutes);
+routes.use("/component-tbca", componentTBCARoutes);
+routes.use("/dish", dishRoutes);
 
 routes.use(authenticateRoutes);
 

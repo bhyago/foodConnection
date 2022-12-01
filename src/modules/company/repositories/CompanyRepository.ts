@@ -1,5 +1,10 @@
 import { ICompanyRepository } from "@modules/company/repositories/ICompanyRepository";
-import { Company, CompanyAddress, CompanyToken } from "@prisma/client";
+import {
+  Company,
+  CompanyAddress,
+  CompanyToken,
+  CompanyType,
+} from "@prisma/client";
 import { hash } from "bcrypt";
 import moment from "moment";
 
@@ -56,13 +61,16 @@ class CompanyRepository implements ICompanyRepository {
   async create(data: ICreateCompany): Promise<Company> {
     const result = await prisma.company.create({
       data: {
-        active: true,
-        cnpj: data.cnpj,
-        email: data.email,
-        legalname: data.legalname,
         name: data.name,
+        email: data.email,
+        typeId: data.typeId,
         password: data.password,
-        phone: data.password,
+        cnpj: data.cnpj,
+        descriptiom: data.description,
+        legalname: data.legalname,
+        logo: data.logo,
+        phone: data.phone,
+        active: true,
         type: data.type,
         created_at: moment().utc().format(),
         companyAddress: {
@@ -86,12 +94,14 @@ class CompanyRepository implements ICompanyRepository {
   async findById(companyId: string): Promise<
     | (Company & {
         companyAddress: CompanyAddress[];
+        companytype: CompanyType;
       })
     | null
   > {
     const result = await prisma.company.findFirst({
       include: {
         companyAddress: true,
+        companytype: true,
       },
       where: {
         id: companyId,

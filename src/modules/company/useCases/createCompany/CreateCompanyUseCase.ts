@@ -3,8 +3,8 @@ import { inject, injectable } from "tsyringe";
 
 import { AppError } from "@shared/errors/AppError";
 
-import { ICreateCompany } from "../dtos/ICompany";
-import { ICompanyRepository } from "../repositories/ICompanyRepository";
+import { ICreateCompany } from "../../dtos/ICompany";
+import { ICompanyRepository } from "../../repositories/ICompanyRepository";
 
 @injectable()
 class CreateCompanyUseCase {
@@ -15,7 +15,6 @@ class CreateCompanyUseCase {
 
   async execute(data: ICreateCompany): Promise<{ id: string }> {
     const emailAlreadyExists = await this.companyRepository.findByEmail(
-      data.companyId,
       data.email
     );
 
@@ -27,6 +26,7 @@ class CreateCompanyUseCase {
     const response = await this.companyRepository.create({
       name: data.name,
       email: data.email,
+      typeId: data.typeId,
       password: passwordHash,
       cnpj: data.cnpj,
       description: data.description,

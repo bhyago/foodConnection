@@ -15,6 +15,7 @@ class CreateCompanyController {
       password,
       email,
       phone,
+      typeId,
       companyAddress,
     } = request.body;
 
@@ -24,6 +25,7 @@ class CreateCompanyController {
 
     const car = await createCarUseCase.execute({
       companyId: String(companyId),
+      typeId,
       name,
       legalname,
       description,
