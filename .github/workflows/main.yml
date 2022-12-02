@@ -8,7 +8,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubundu-22.04
+    runs-on: ubundu-18
     
     steps:
       - uses: actions/checkout@v2
