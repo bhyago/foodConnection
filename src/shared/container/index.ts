@@ -6,6 +6,8 @@ import { CompanyRepository } from "@modules/company/repositories/CompanyReposito
 import { ICompanyRepository } from "@modules/company/repositories/ICompanyRepository";
 import { CompanyTypeRepository } from "@modules/companyType/repositories/CompanyTypeRepository";
 import { ICompanyTypeRepository } from "@modules/companyType/repositories/ICompanyTypeRepository";
+import { ComponentTBCARepository } from "@modules/componentTBCA/repositories/ComponentTBCARepository";
+import { IComponentTBCARepository } from "@modules/componentTBCA/repositories/IComponentTBCARepository";
 import { DishRepository } from "@modules/dish/repository/DishRepository";
 import { IDishRepository } from "@modules/dish/repository/IDishRepository";
 import { FoodRepository } from "@modules/food/reposotories/FoodRepository";
@@ -71,6 +73,11 @@ container.registerSingleton<IAllergicRepository>(
 container.registerSingleton<ICompanyTypeRepository>(
   "CompanyTypeRepository",
   CompanyTypeRepository
+);
+
+container.registerSingleton<IComponentTBCARepository>(
+  "ComponentTBCARepository",
+  ComponentTBCARepository
 );
 
 container.registerSingleton<IDishRepository>("DishRepository", DishRepository);

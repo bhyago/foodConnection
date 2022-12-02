@@ -1,3 +1,4 @@
+import { IAllergicRepository } from "@modules/allergic/repository/IAllergicRepository";
 import { ICompanyRepository } from "@modules/company/repositories/ICompanyRepository";
 import {
   ICreateIngredient,
@@ -13,6 +14,7 @@ export class CreateIngredientUseCase {
   constructor(
     @inject("IngredientRepository")
     private ingredientRepository: IIngredientRepository,
+
     @inject("CompanyRepository")
     private companyRepository: ICompanyRepository
   ) {}

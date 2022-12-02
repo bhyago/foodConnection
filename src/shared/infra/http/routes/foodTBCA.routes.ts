@@ -10,7 +10,7 @@ const getFoodTBCAController = new GetFoodTBCAController();
 const updateFoodTBCAController = new UpdateFoodTBCAController();
 
 foodTBCARoutes.post("/", createFoodController.handle);
-foodTBCARoutes.get("/", getFoodTBCAController.handle);
+foodTBCARoutes.get("/:foodId", getFoodTBCAController.handle);
 foodTBCARoutes.patch("/", updateFoodTBCAController.handle);
 
 export { foodTBCARoutes };

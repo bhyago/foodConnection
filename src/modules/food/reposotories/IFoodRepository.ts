@@ -21,10 +21,7 @@ interface IFoodRepository {
     ]
   >;
 
-  findTypeById(data: {
-    companyId: string;
-    foodTypeId: string;
-  }): Promise<FoodType | null>;
+  findTypeById(data: { foodTypeId: string }): Promise<FoodType | null>;
 
   update(data: IUpdateFood): Promise<
     Food & {

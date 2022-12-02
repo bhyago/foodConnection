@@ -10,7 +10,6 @@ export class GetIngredientController {
     const { companyId } = request.query;
 
     const getIngredientUseCase = container.resolve(GetIngredientUseCase);
-    console.log("---------------companyId--------------------", companyId);
 
     const result = await getIngredientUseCase.execute({
       companyId: String(companyId),

@@ -1,4 +1,5 @@
 import { ICompanyRepository } from "@modules/company/repositories/ICompanyRepository";
+import { IComponentTBCARepository } from "@modules/componentTBCA/repositories/IComponentTBCARepository";
 import { IFoodRepository } from "@modules/food/reposotories/IFoodRepository";
 import { ICreateFoodTBCA } from "@modules/foodTBCA/dtos/IFoodTBCA";
 import { IFoodTBCARepository } from "@modules/foodTBCA/repositories/IFoodTBCARepository";
@@ -17,7 +18,10 @@ export class CreateFoodTBCAUseCase {
     private foodTBCARepository: IFoodTBCARepository,
 
     @inject("CompanyRepository")
-    private companyRepository: ICompanyRepository
+    private companyRepository: ICompanyRepository,
+
+    @inject("ComponentTBCARepository")
+    private componentTBCARepository: IComponentTBCARepository
   ) {}
 
   async execute({
@@ -25,6 +29,7 @@ export class CreateFoodTBCAUseCase {
     foodId,
     unity,
     valueBy100g,
+    componentTBCAId,
   }: ICreateFoodTBCA): Promise<FoodTBCA> {
     const companyExists = await this.companyRepository.findById(companyId);
 
@@ -40,13 +45,12 @@ export class CreateFoodTBCAUseCase {
       throw new AppError("the food informed does not exist");
     }
 
-    const tbcaExists = await this.foodTBCARepository.findById({
-      companyId,
-      foodId,
-    });
+    const componentTBCAExists = await this.componentTBCARepository.findById(
+      componentTBCAId
+    );
 
-    if (!tbcaExists) {
-      throw new AppError("the table tbca of the food informed was not found.");
+    if (!componentTBCAExists) {
+      throw new AppError("the component tbca informed does not exist");
     }
 
     const response = await this.foodTBCARepository.create({
@@ -54,6 +58,7 @@ export class CreateFoodTBCAUseCase {
       foodId,
       unity,
       valueBy100g,
+      componentTBCAId,
     });
 
     return response;

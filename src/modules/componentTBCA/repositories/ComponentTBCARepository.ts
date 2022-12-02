@@ -4,7 +4,7 @@ import moment from "moment";
 import { prisma } from "@shared/infra/prisma";
 
 import { IListComponentTBCA } from "../dtos/IComponentTBCA";
-import { IComponentTBCARepository } from "./IComponentTBCA";
+import { IComponentTBCARepository } from "./IComponentTBCARepository";
 
 export class ComponentTBCARepository implements IComponentTBCARepository {
   async findMany(data: IListComponentTBCA): Promise<[number, ComponentTBCA[]]> {

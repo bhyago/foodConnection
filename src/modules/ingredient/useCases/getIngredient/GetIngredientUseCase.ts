@@ -41,8 +41,8 @@ export class GetIngredientUseCase {
       description: ingredientExists.description,
       name: ingredientExists.name,
       vegan: ingredientExists.vegan,
-      allergic: ingredientExists.IngredientAlergic.length
-        ? ingredientExists.IngredientAlergic.map((allergic) => ({
+      allergic: ingredientExists.ingredientAllergic.length
+        ? ingredientExists.ingredientAllergic.map((allergic) => ({
             id: allergic.allergic.id,
             name: allergic.allergic.name,
           }))

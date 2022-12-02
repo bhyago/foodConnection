@@ -23,7 +23,7 @@ export class GetFoodTBCAUseCase {
     private companyRepository: ICompanyRepository
   ) {}
 
-  async execute({ companyId, foodId }: IGetFoodTBCA): Promise<FoodTBCA> {
+  async execute({ companyId, foodId }: IGetFoodTBCA): Promise<FoodTBCA[]> {
     const companyExists = await this.companyRepository.findById(companyId);
 
     if (!companyExists) {
@@ -38,7 +38,7 @@ export class GetFoodTBCAUseCase {
       throw new AppError("the food informed does not exist");
     }
 
-    const tbcaExists = await this.foodTBCARepository.findById({
+    const tbcaExists = await this.foodTBCARepository.findByFoodId({
       companyId,
       foodId,
     });

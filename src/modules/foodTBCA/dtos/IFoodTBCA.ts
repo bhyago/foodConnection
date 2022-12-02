@@ -3,6 +3,7 @@ export interface ICreateFoodTBCA {
   foodId: string;
   unity: string;
   valueBy100g: number;
+  componentTBCAId: string;
 }
 
 export interface IGetFoodTBCA {
@@ -12,7 +13,9 @@ export interface IGetFoodTBCA {
 
 export interface IUpdateFoodTBCA {
   companyId: string;
+  id: string;
   foodId: string;
   unity: string;
   valueBy100g: number;
+  componentTBCAId: string;
 }

@@ -46,17 +46,15 @@ export class ListIngredientsUseCase {
 
     const response: IResponseIngredient[] = [];
 
-    console.log(ingredients);
-
     ingredients[1].forEach(
-      ({ created_at, description, id, name, vegan, IngredientAlergic }) => {
+      ({ created_at, description, id, name, vegan, ingredientAllergic }) => {
         return response.push({
           description,
           id,
           name,
           vegan,
-          allergic: IngredientAlergic.length
-            ? IngredientAlergic.map((allergic) => ({
+          allergic: ingredientAllergic.length
+            ? ingredientAllergic.map((allergic) => ({
                 id: allergic.allergic.id,
                 name: allergic.allergic.name,
               }))

@@ -1,5 +1,5 @@
 import { IListComponentTBCA } from "@modules/componentTBCA/dtos/IComponentTBCA";
-import { IComponentTBCARepository } from "@modules/componentTBCA/repositories/IComponentTBCA";
+import { IComponentTBCARepository } from "@modules/componentTBCA/repositories/IComponentTBCARepository";
 import { ComponentTBCA } from "@prisma/client";
 import { inject, injectable } from "tsyringe";
 

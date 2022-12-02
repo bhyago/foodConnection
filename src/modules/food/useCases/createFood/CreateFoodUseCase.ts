@@ -29,7 +29,6 @@ export class CreateFoodUseCase {
     }
     const foodTypeExists = await this.foodRepository.findTypeById({
       foodTypeId,
-      companyId,
     });
 
     if (!foodTypeExists) {

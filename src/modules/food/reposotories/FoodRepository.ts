@@ -83,6 +83,7 @@ class FoodRepository implements IFoodRepository {
       where: {
         name: data.name,
         id_company: data.companyId,
+        active: true,
       },
     });
 
@@ -99,19 +100,16 @@ class FoodRepository implements IFoodRepository {
       where: {
         id: data.id,
         id_company: data.companyId,
+        active: true,
       },
     });
 
     return result;
   }
 
-  async findTypeById(data: {
-    companyId: string;
-    foodTypeId: string;
-  }): Promise<FoodType | null> {
+  async findTypeById(data: { foodTypeId: string }): Promise<FoodType | null> {
     const result = await prisma.foodType.findFirst({
       where: {
-        id_company: data.companyId,
         id: data.foodTypeId,
       },
     });

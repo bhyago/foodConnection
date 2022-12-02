@@ -30,7 +30,6 @@ export class UpdateFoodUseCase {
 
     const foodTypeExists = await this.foodRepository.findTypeById({
       foodTypeId,
-      companyId,
     });
 
     if (!foodTypeExists) {

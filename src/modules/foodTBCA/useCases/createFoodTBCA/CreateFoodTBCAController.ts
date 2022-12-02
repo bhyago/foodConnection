@@ -5,7 +5,7 @@ import { CreateFoodTBCAUseCase } from "./CreateFoodTBCAUseCase";
 
 export class CreateFoodTBCAController {
   async handle(request: Request, response: Response): Promise<Response> {
-    const { foodId, unity, valueBy100g } = request.body;
+    const { foodId, unity, valueBy100g, componentTBCAId } = request.body;
 
     const { companyId } = request.query;
 
@@ -16,6 +16,7 @@ export class CreateFoodTBCAController {
       foodId,
       unity,
       valueBy100g,
+      componentTBCAId,
     });
 
     return response.status(201).json(result);
