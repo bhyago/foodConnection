@@ -32,4 +32,18 @@ jobs:
           port: ${{ secrets.SSH_PORT }}
           source: "., !node_modules"
           target: "~/app/foodConnection"
-        
+      
+      
+      - name: multiple command
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.KEY }}
+          port: ${{ secrets.PORT }}
+          script: |
+            cd ~/app/foodConnection
+            yarn
+            ./node_modules/.bin/prisma migrate dev
+            pm2 restart foodConnectionApi
+
