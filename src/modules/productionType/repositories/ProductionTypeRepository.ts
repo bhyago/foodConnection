@@ -14,7 +14,6 @@ export class ProductionTypeRepository implements IProductionTypeRepository {
   ): Promise<ProductionType | null> {
     const result = await prisma.productionType.findFirst({
       where: {
-        companyId,
         id,
       },
     });
@@ -31,16 +30,9 @@ export class ProductionTypeRepository implements IProductionTypeRepository {
         name: "name",
       }[data.sortBy] || "id";
 
-    const whereObj: Prisma.ProductionTypeWhereInput = {
-      companyId: data.companyId,
-    };
-
     const result = await prisma.$transaction([
-      prisma.productionType.count({
-        where: whereObj,
-      }),
+      prisma.productionType.count(),
       prisma.productionType.findMany({
-        where: whereObj,
         take: data.limit || undefined,
         skip: data.limit * (data.page > 0 ? data.page - 1 : 0) || undefined,
       }),

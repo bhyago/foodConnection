@@ -8,29 +8,29 @@ datasource db {
 }
 
 model Company {
-  id              String            @id @default(uuid())
-  name            String            @db.VarChar(60)
-  legalname       String            @db.VarChar(100)
-  descriptiom     String?           @db.VarChar(500)
-  logo            String?           @db.Text
-  cnpj            String            @unique @db.VarChar(14)
-  type            String            @db.VarChar(12)
-  password        String            @db.VarChar(1000)
-  email           String            @db.VarChar(100)
-  phone           String            @db.VarChar(32)
-  typeId          String
-  active          Boolean
-  created_at      DateTime          @default(dbgenerated("(timezone('UTC'::text, now()))::timestamp(0) without time zone")) @db.Timestamp(6)
-  updated_at      DateTime?         @db.Timestamp(6)
-  companyAddress  CompanyAddress[]
-  Provider        Provider[]
-  FoodType        FoodType[]
-  Food            Food[]
-  Ingredient      Ingredient[]
-  ProductionChain ProductionChain[]
-  ProductionType  ProductionType[]
-  CompanyToken    CompanyToken[]
-  companytype     CompanyType       @relation(fields: [typeId], references: [id])
+  id                      String                    @id @default(uuid())
+  name                    String                    @db.VarChar(60)
+  legalname               String                    @db.VarChar(100)
+  descriptiom             String?                   @db.VarChar(500)
+  logo                    String?                   @db.Text
+  cnpj                    String                    @unique @db.VarChar(14)
+  type                    String                    @db.VarChar(12)
+  password                String                    @db.VarChar(1000)
+  email                   String                    @db.VarChar(100)
+  phone                   String                    @db.VarChar(32)
+  typeId                  String
+  active                  Boolean
+  created_at              DateTime                  @default(dbgenerated("(timezone('UTC'::text, now()))::timestamp(0) without time zone")) @db.Timestamp(6)
+  updated_at              DateTime?                 @db.Timestamp(6)
+  companyAddress          CompanyAddress[]
+  Provider                Provider[]
+  Food                    Food[]
+  Ingredient              Ingredient[]
+  ProductionChain         ProductionChain[]
+  CompanyToken            CompanyToken[]
+  companytype             CompanyType               @relation(fields: [typeId], references: [id])
+  Dish                    Dish[]
+  BashDishProductionChain BashDishProductionChain[]
 
   @@map("company")
 }
@@ -66,20 +66,23 @@ model Dish {
   id                      String                    @id @default(uuid())
   name                    String                    @db.VarChar(100)
   description             String                    @db.VarChar(500)
-  companyId               String          
-  active                  Boolean          
+  companyId               String
+  active                  Boolean
   BashDishProductionChain BashDishProductionChain[]
+  company                 Company                   @relation(fields: [companyId], references: [id])
 
   @@map("dishproductionchain")
 }
 
 model BashDishProductionChain {
-  id String @id @default(uuid())
-  dishId String
-  productionChainId     String
-  active                Boolean
-  dishproductionchain Dish @relation(fields: [dishId], references: [id])
-  productionChain     ProductionChain     @relation(fields: [productionChainId], references: [id])
+  id                  String          @id @default(uuid())
+  companyId           String
+  dishId              String
+  productionChainId   String
+  active              Boolean
+  dishproductionchain Dish            @relation(fields: [dishId], references: [id])
+  productionChain     ProductionChain @relation(fields: [productionChainId], references: [id])
+  company             Company         @relation(fields: [companyId], references: [id])
 }
 
 model CompanyToken {
@@ -110,11 +113,9 @@ model Provider {
 }
 
 model FoodType {
-  id         String  @id @default(uuid())
-  type       String  @db.VarChar(100)
-  id_company String
-  company    Company @relation(fields: [id_company], references: [id])
-  Food       Food[]
+  id   String @id @default(uuid())
+  type String @db.VarChar(100)
+  Food Food[]
 
   @@map("foodtype")
 }
@@ -134,7 +135,7 @@ model Food {
   created_at      DateTime          @default(dbgenerated("(timezone('UTC'::text, now()))::timestamp(0) without time zone")) @db.Timestamp(6)
   updated_at      DateTime?
   ProductionChain ProductionChain[]
-  FoodTBCA        FoodTBCA?
+  FoodTBCA        FoodTBCA[]
 
   @@map("food")
 }
@@ -149,7 +150,7 @@ model ComponentTBCA {
 
 model FoodTBCA {
   id              String @id @default(uuid())
-  foodId          String @unique
+  foodId          String 
   componentTBCAId String
   unity           String @db.VarChar(3)
   valueBy100g     Int
@@ -197,8 +198,6 @@ model IngredientAllergic {
 model ProductionType {
   id              String            @id @default(uuid())
   name            String            @db.VarChar(100)
-  companyId       String
-  company         Company           @relation(fields: [companyId], references: [id])
   ProductionChain ProductionChain[]
 
   @@map("productiontype")

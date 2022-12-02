@@ -34,7 +34,7 @@ export class GetProductionTypeUseCase {
     );
 
     if (!foodExits) {
-      throw new AppError("the reported food was not found.");
+      throw new AppError("the reported production type was not found.");
     }
 
     return {
