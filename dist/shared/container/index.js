@@ -1,0 +1,31 @@
+"use strict";
+
+var _AlergicRepository = require("@modules/allergic/repository/AlergicRepository");
+var _BashDishProductionChainRepository = require("@modules/bashDishProducionChain/repository/BashDishProductionChainRepository");
+var _CompanyRepository = require("@modules/company/repositories/CompanyRepository");
+var _CompanyTypeRepository = require("@modules/companyType/repositories/CompanyTypeRepository");
+var _ComponentTBCARepository = require("@modules/componentTBCA/repositories/ComponentTBCARepository");
+var _DishRepository = require("@modules/dish/repository/DishRepository");
+var _FoodRepository = require("@modules/food/reposotories/FoodRepository");
+var _FoodTBCARepositroy = require("@modules/foodTBCA/repositories/FoodTBCARepositroy");
+var _IngredientRepository = require("@modules/ingredient/repositories/IngredientRepository");
+var _ProductionChainRepository = require("@modules/productionChain/repositories/ProductionChainRepository");
+var _ProductionTypeRepository = require("@modules/productionType/repositories/ProductionTypeRepository");
+var _ProviderRepository = require("@modules/provider/repositories/ProviderRepository");
+var _TransportRepository = require("@modules/transport/repositories/TransportRepository");
+var _tsyringe = require("tsyringe");
+// import "@shared/container/providers";
+
+_tsyringe.container.registerSingleton("CompanyRepository", _CompanyRepository.CompanyRepository);
+_tsyringe.container.registerSingleton("ProviderRepository", _ProviderRepository.ProviderRepository);
+_tsyringe.container.registerSingleton("FoodRepository", _FoodRepository.FoodRepository);
+_tsyringe.container.registerSingleton("IngredientRepository", _IngredientRepository.IngredientRepository);
+_tsyringe.container.registerSingleton("ProductionTypeRepository", _ProductionTypeRepository.ProductionTypeRepository);
+_tsyringe.container.registerSingleton("FoodTBCARepository", _FoodTBCARepositroy.FoodTBCARepository);
+_tsyringe.container.registerSingleton("TransportRepository", _TransportRepository.TransportRepository);
+_tsyringe.container.registerSingleton("ProductionChainRepository", _ProductionChainRepository.ProductionChainRepository);
+_tsyringe.container.registerSingleton("AllergicRepository", _AlergicRepository.AllergicRepository);
+_tsyringe.container.registerSingleton("CompanyTypeRepository", _CompanyTypeRepository.CompanyTypeRepository);
+_tsyringe.container.registerSingleton("ComponentTBCARepository", _ComponentTBCARepository.ComponentTBCARepository);
+_tsyringe.container.registerSingleton("DishRepository", _DishRepository.DishRepository);
+_tsyringe.container.registerSingleton("BashDishProductionChainRepository", _BashDishProductionChainRepository.BashDishProductionChainRepository);

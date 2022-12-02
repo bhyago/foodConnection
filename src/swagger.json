@@ -1,0 +1,302 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+      "title": "Food connection Documentation",
+      "description": "Api feita para ",
+      "version": "1.0.0",
+      "contact": {
+        "email": "bhyaago@gmail.com"
+      }
+    },
+    "paths": {
+      "/company-types": {
+        "get": {
+          "tags": ["company-types"],
+          "summary": "Rota responsavel por listar tipos de empresas.",
+          "description": "Tipos possiveis para cadastrar empresa.",
+          "responses": {
+            "200": {
+              "description": "Success",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "items":{
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "description": "ID do tipo de empresa",
+                                "example": "08d631c5-c070-494f-8ac1-4bcf0f2a8e07"
+                              },
+                              "name": {
+                                "type": "string",
+                                "description": "Nome do tipo de empresa.",
+                                "example": "restaurante"
+                              }
+                            }
+                          }
+                        },
+                        "total": {
+                          "type": "integer",
+                          "description": "total de registros",
+                          "example": 2
+
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": ""
+            },
+            "500":{
+              "description": ""
+            }
+          }
+        }
+      },
+      "/company-types/:id": {
+        "get": {
+          "tags": ["company-types"],
+          "summary": "Rota responsavel por pegar um tipos de empresa.",
+          "description": "Tipo possiveil para cadastrar empresa.",
+          "responses": {
+            "200": {
+              "description": "Success",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "description": "ID do tipo de empresa",
+                          "example": "08d631c5-c070-494f-8ac1-4bcf0f2a8e07"
+                        },
+                        "name": {
+                          "type": "string",
+                          "description": "Nome do tipo de empresa.",
+                          "example": "restaurante"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": ""
+            },
+            "500":{
+              "description": ""
+            }
+          }
+        }
+      },
+      "/companies": {
+        "post": {
+          "tags": ["companies"],
+          "summary": "Rota responsavel por criar uma empresa.",
+          "description": "É possivel criar dois tipos de empresas. Empresas do tipo 'restaurante' ou 'produtora'.",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "description": "Nome da empresa",
+                      "example": "Agro Express"
+                    },
+                    "typeId": {
+                      "type": "string",
+                      "description": "ID do tipo de empresa. O id deve ser ecolhido na rota de tipos de empresa de acordo com o tipo de trabalho que sua empresa fornece.",
+                      "example": "5cba1415-9f5b-4b39-82f7-2e44f8166aa3"
+                    },
+                    "legalname": {
+                      "type": "string",
+                      "description": "Nome juridico da empresa.",
+                      "example": "Agro express LTDA"
+                    },
+                    "description": {
+                      "type": "string",
+                      "description": "campo livre para descrever sobre o trabalho da empresa.",
+                      "example": "Empresa fornecedora de legumes frescos."
+                    },
+                    "cnpj": {
+                      "type": "string",
+                      "description": "18685945000150",
+                      "minLength": 14,
+                      "maxLength": 14,
+                      "example": "cnpj da empresa cadastrada."
+                    },
+                    "type": {
+                      "type": "string",
+                      "description": "tipo de trabalho da empresa.",
+                      "example": "produtora"
+                    },
+                    "password": {
+                      "type": "string",
+                      "description": "cadastro de senha para utilizar o sistema food connection.",
+                      "example": "NTdc4JKXQlUcnBi"
+                    },
+                    "email": {
+                      "type": "string",
+                      "description": "cadastro de email para utilizaro sistema food connection.",
+                      "example": "agroexpress@gmail.com"
+                    },
+                    "phone": {
+                      "type": "string",
+                      "description": "telefone de contado da empresa,",
+                      "example": "21994033093"
+                    },
+                    "companyAddress": {
+                      "type": "object",
+                      "description": "datos de endereço da empresa",
+                      "properties": {
+                        "zipcode": {
+                          "type": "string",
+                          "description": "cep",
+                          "example": "23560620"   
+                        },
+                        "street": {
+                          "type": "string",
+                          "description": "Nome da rua",
+                          "example": "Rua 12"
+                        },
+                        "number": {
+                          "type": "string",
+                          "description": "numero do endereço",
+                          "example": "12"
+                        },
+                        "complement": {
+                          "type": "string",
+                          "description": "complemento do endereço",
+                          "example": "ao lado da igreja catolica"
+                        },
+                        "neighborhood": {
+                          "type":"string",
+                          "description": "bairro da localização da empresa",
+                          "example": "Santa Cruz"
+                        },
+                        "city": {
+                          "type": "string",
+                          "description": "cidade da localização da empresa.",
+                          "example": "Rio de janeiro"
+                        },
+                        "state": {
+                          "type": "string",
+                          "description": "Estado do localizaçã0o da empresa",
+                          "example": "RJ"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "Created"
+            },
+            "400": {
+              "description": ""
+            },
+            "500": {
+              "description": "Category already exists"
+            }
+          }
+        },
+        "get": {
+          "tags": [
+            "Category"
+          ],
+          "summary": "List all category",
+          "description": "List all category",
+          "responses": {
+            "200": {
+              "description": "Success",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "description": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/authentication": {
+        "post": {
+          "tags": ["authentication"],
+          "summary": "Rota para fazer login.",
+          "description": "Rota de login que será utilizara para gerar o token responsavel para acessar rotas privadas.",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "email": {
+                      "type": "string",
+                      "description": "email da empresa cadastrada",
+                      "example": "agroexpress@gmail.com"
+                    },
+                    "password": {
+                      "type": "string",
+                      "description": "Senha da empresa cadastrada.",
+                      "example": "NTdc4JKXQlUcnBi"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoxMDAwLCJtYWxsSWQiOjUsImlhdCI6MTY2OTkzMTIyOH0.n07msRrp1cA-D_dQg-5h3_6Vew_PKYKqe1DYuyMlMOc"
+                    }
+                    
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": ""
+            },
+            "500": {
+              "description": "Category already exists"
+            }
+          }
+        }
+      }
+    }
+  }
