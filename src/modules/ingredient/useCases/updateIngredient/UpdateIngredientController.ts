@@ -5,9 +5,8 @@ import { UpdateIngredientUseCase } from "./UpdateIngredientUseCase";
 
 export class UpdateIngredientController {
   async handle(request: Request, response: Response): Promise<Response> {
-    const { id } = request.params;
     const { companyId } = request.query;
-    const { vegan, description, name } = request.body;
+    const { id, vegan, description, name } = request.body;
 
     const updateIngredientUseCase = container.resolve(UpdateIngredientUseCase);
 

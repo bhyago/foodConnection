@@ -14,7 +14,7 @@ const updateProviderController = new UpdateProviderController();
 providerRoutes.post("/", createProviderController.handle);
 providerRoutes.get("/", listProvidersController.handle);
 providerRoutes.get("/:id", getProviderController.handle);
-providerRoutes.patch("/:providerId", updateProviderController.handle);
+providerRoutes.patch("/", updateProviderController.handle);
 // providerRoutes.delete("/:id", createCompanyController.handle);
 
 export { providerRoutes };
