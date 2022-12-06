@@ -297,6 +297,1063 @@
             }
           }
         }
+      },
+      "/food": {
+        "post": {
+          "tags": ["food"],
+          "summary": "Criação de alimentos",
+          "description": "Rota para criação de alimentos que a empresa produz.",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "description": "alface rocha horganica",
+                    "foodTypeId": "7caa577d-e114-4038-b912-0cd391ecb584",
+                    "name": "arroz"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "get": {
+          "tags": ["food"],
+          "summary": "Lista alimentos ativos",
+          "description": "Rota para listar alimentos ativos de uma empresa.",
+          "responses": {
+            "200": {
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "example": {
+                      "data": [
+                        {
+                          "id": "095472a1-f1c9-401c-a956-73a8213dd975",
+                          "description": "alface rocha horganica",
+                          "name": "rucula",
+                          "type": {
+                            "id": "0dac1824-24ca-42ce-9620-5bfb0d27bc7c",
+                            "name": "Hortaliças"
+                          }
+                        },
+                        {
+                          "id": "cbc7c225-6c9f-45d2-b9ad-0fbca1b49d98",
+                          "description": "alface rocha horganica",
+                          "name": "arroz",
+                          "type": {
+                            "id": "7caa577d-e114-4038-b912-0cd391ecb584",
+                            "name": "Cereais"
+                          }
+                        },
+                        {
+                          "id": "eb737ce2-7a89-4aed-8f0e-c86f29229648",
+                          "description": "pão rocha horganica",
+                          "name": "pão",
+                          "type": {
+                            "id": "6b7cd81c-677d-4c2d-b9ba-d7de4118c56a",
+                            "name": "Frutas"
+                          }
+                        }
+                      ],
+                      "total": 3
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "food/{id}": {
+        "get": {
+          "tags":["food"],
+          "summary": "Retorna um alimento",
+          "description": "Retonar um alimento selecionado pelo id",
+          "parameters": [
+            {
+              "in": "params",
+              "name": "id",
+              "description": "Id do alimento",
+              "required": true,
+              "explode": true,
+              "schema": {
+                "type": "string",
+                "example": "095472a1-f1c9-401c-a956-73a8213dd975"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "example": {
+                      "id": "095472a1-f1c9-401c-a956-73a8213dd975",
+                      "description": "alface rocha horganica",
+                      "name": "rucula",
+                      "type": {
+                        "id": "0dac1824-24ca-42ce-9620-5bfb0d27bc7c",
+                        "name": "Hortaliças"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "patch": {
+          "tags": ["food"],
+          "summary": "Atualiza um alimento",
+          "description": "Rota para atualizar um registro de alimento",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example":{
+                    "id": "095472a1-f1c9-401c-a956-73a8213dd975",
+                    "description": "alface rocha horganica",
+                    "name": "rucula",
+                    "type": {
+                      "id": "0dac1824-24ca-42ce-9620-5bfb0d27bc7c",
+                      "name": "Hortaliças"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "delete": {
+          "tags":["food"],
+          "summary": "Deleta um alimento",
+          "description": "Deleta um alimento selecionado pelo id",
+          "parameters": [
+            {
+              "in": "params",
+              "name": "id",
+              "description": "Id do alimento",
+              "required": true,
+              "explode": true,
+              "schema": {
+                "type": "string",
+                "example": "095472a1-f1c9-401c-a956-73a8213dd975"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "example": {
+                      "id": "095472a1-f1c9-401c-a956-73a8213dd975",
+                      "description": "alface rocha horganica",
+                      "name": "rucula",
+                      "type": {
+                        "id": "0dac1824-24ca-42ce-9620-5bfb0d27bc7c",
+                        "name": "Hortaliças"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/allergic": {
+        "get": {
+          "tags": ["allergic"],
+          "summary": "Lista tipos de alergicos",
+          "description": "Lista tipos de alergicos sistemicos",
+          "responses": {
+            "200": {
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "example": {
+                      "data": [
+                        {
+                          "id": "08d631c5-c070-494f-8ac1-4bcf0f2a8e07",
+                          "name": "lactose"
+                        },
+                        {
+                          "id": "c4c4aebc-91c9-4aee-82aa-8d8c0926d4f4",
+                          "name": "gluten"
+                        },
+                        {
+                          "id": "a4e75a1c-ebf9-4804-9f68-5eb40b57b470",
+                          "name": "derivados do leite"
+                        }
+                      ],
+                      "total": 3
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/allergic/{id}": {
+        "get": {
+          "tags":["allergic"],
+          "summary": "Retorna um tipo de alergico",
+          "description": "Retonar um tipo de alergico pelo id",
+          "parameters": [
+            {
+              "in": "params",
+              "name": "id",
+              "description": "Id do alergico",
+              "required": true,
+              "explode": true,
+              "schema": {
+                "type": "string",
+                "example": "095472a1-f1c9-401c-a956-73a8213dd975"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "example":{
+                      "id": "08d631c5-c070-494f-8ac1-4bcf0f2a8e07",
+                      "name": "lactose"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/ingredient": {
+        "post": {
+          "tags":["ingredient"],
+          "summary": "Criar ingredient",
+          "description": "Rota para criar uma ingrediente",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "description": "",
+                    "name": "sucarose",
+                    "vegan": true,
+                    "allergicIds": ["08d631c5-c070-494f-8ac1-4bcf0f2a8e07", "c4c4aebc-91c9-4aee-82aa-8d8c0926d4f4"]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "get": {
+          "tags": ["ingredient"],
+          "summary": "Lista ingredientes",
+          "description": "Lista ingredientes de uma empresa",
+          "responses": {
+            "200": {
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "example": {
+                      "data": [
+                        {
+                          "description": "sucarose",
+                          "id": "835a8bb4-bf6b-4b3e-a191-9ca7bb3c19a1",
+                          "name": "sucarose",
+                          "vegan": true,
+                          "allergic": [
+                            {
+                              "id": "08d631c5-c070-494f-8ac1-4bcf0f2a8e07",
+                              "name": "lactose"
+                            },
+                            {
+                              "id": "c4c4aebc-91c9-4aee-82aa-8d8c0926d4f4",
+                              "name": "gluten"
+                            }
+                          ],
+                          "registerDate": "2022-12-02T01:04:22.000Z"
+                        },
+                        {
+                          "description": "test ingredient 2",
+                          "id": "3e9474e0-bb81-42e7-8721-fbf957f1b9b5",
+                          "name": "acuçar 2",
+                          "vegan": true,
+                          "allergic": null,
+                          "registerDate": "2022-12-02T00:08:48.000Z"
+                        }
+                      ],
+                      "total": 2
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "ingredient/{id}": {
+        "get": {
+          "tags":["ingredient"],
+          "summary": "Retorna um ingrediente",
+          "description": "Retonar um ingrediente selecionado pelo id",
+          "parameters": [
+            {
+              "in": "params",
+              "name": "id",
+              "description": "Id do ingrediente",
+              "required": true,
+              "explode": true,
+              "schema": {
+                "type": "string",
+                "example": "095472a1-f1c9-401c-a956-73a8213dd975"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "example": {
+                      "id": "3e9474e0-bb81-42e7-8721-fbf957f1b9b5",
+                      "description": "test ingredient 2",
+                      "name": "acuçar 2",
+                      "vegan": true,
+                      "allergic": null,
+                      "registerDate": "2022-12-02T00:08:48.000Z"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "patch": {
+          "tags": ["ingredient"],
+          "summary": "Atualiza um ingrediente",
+          "description": "Rota para atualizar um registro de ingrediente",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example":{
+                    "id": "3e9474e0-bb81-42e7-8721-fbf957f1b9b5",
+                    "description": "",
+                    "name": "",
+                    "vegan": true
+                  }
+                }
+              }
+            }
+          }
+        },
+        "delete": {
+          "tags":["ingredient"],
+          "summary": "Deleta um ingrediente",
+          "description": "Deleta um alimento selecionado pelo id",
+          "parameters": [
+            {
+              "in": "params",
+              "name": "id",
+              "description": "Id do alimento",
+              "required": true,
+              "explode": true,
+              "schema": {
+                "type": "string",
+                "example": "095472a1-f1c9-401c-a956-73a8213dd975"
+              }
+            }
+          ],
+          "responses": {
+            "204": {}
+          }
+        }
+      },
+      "/productiontype": {
+        "get": {
+          "tags": ["productiontype"],
+          "summary": "Lista tipos de produção",
+          "description": "Lista tipos de produção sistemicas",
+          "responses": {
+            "200": {
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "example": {
+                      "data": [
+                        {
+                          "id": "  d43014b6-dfde-46c1-a706-806ab788f5ab          ProductionType[]\n",
+                          "name": "agricuta organica"
+                        },
+                        {
+                          "id": "d1b4b9ff-5da1-4fad-9b20-f7146026666a",
+                          "name": "agricutura familiar"
+                        }
+                      ],
+                      "total": 2
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "productiontype/{id}": {
+        "get": {
+          "tags":["productiontype"],
+          "summary": "Retorna um tipo de produção",
+          "description": "Retonar um tipo de produção pelo id",
+          "parameters": [
+            {
+              "in": "params",
+              "name": "id",
+              "description": "Id do ingrediente",
+              "required": true,
+              "explode": true,
+              "schema": {
+                "type": "string",
+                "example": "095472a1-f1c9-401c-a956-73a8213dd975"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "example":{
+                      "id": "d1b4b9ff-5da1-4fad-9b20-f7146026666a",
+                      "name": "agricultura familiar"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/providers": {
+        "post": {
+          "tags":["providers"],
+          "summary": "Criar provedores",
+          "description": "Rota para provedores de uma empresa",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "name": "Terra ltda",
+                    "cnpj": "111111111111",
+                    "area": "produção adubos"
+                  }
+                }
+              }
+            }
+            
+          }
+        },
+        "get": {
+          "tags": ["providers"],
+          "summary": "Lista provedores",
+          "description": "Lista provedores de uma empresa",
+          "responses": {
+            "200": {
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "example": {
+                      "total": 1,
+                      "data": [
+                        {
+                          "id": "b2655475-75ca-4210-9b93-2958d3bbe0ff",
+                          "id_company": "2363617f-fe8c-4674-8297-af1d08db49fb",
+                          "name": "Terra ltda",
+                          "cnpj": "111111111111",
+                          "area": "produção adubos",
+                          "active": true,
+                          "created_at": "2022-12-02T02:50:31.000Z",
+                          "updated_at": null
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "providers/{id}": {
+        "get": {
+          "tags":["providers"],
+          "summary": "Retorna um provedor",
+          "description": "Retonar um provedor selecionado pelo id",
+          "parameters": [
+            {
+              "in": "params",
+              "name": "id",
+              "description": "Id do ingrediente",
+              "required": true,
+              "explode": true,
+              "schema": {
+                "type": "string",
+                "example": "095472a1-f1c9-401c-a956-73a8213dd975"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "example":{
+                      "id": "b2655475-75ca-4210-9b93-2958d3bbe0ff",
+                      "id_company": "2363617f-fe8c-4674-8297-af1d08db49fb",
+                      "name": "Terra ltda",
+                      "cnpj": "111111111111",
+                      "area": "produção adubos",
+                      "active": true,
+                      "created_at": "2022-12-02T02:50:31.000Z",
+                      "updated_at": null
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "patch": {
+          "tags":["providers"],
+          "summary": "Atualiza provedores",
+          "description": "Rota para atualizar provedores de uma empresa",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "providerId": "b2655475-75ca-4210-9b93-2958d3bbe0ff",
+                    "name": "Terra ltda",
+                    "cnpj": "111111111111",
+                    "area": "produção adubos"
+                  }
+                }
+              }
+            }
+            
+          }
+        }
+      },
+      "/component-tbca": {
+        "get": {
+          "tags": ["component-tbca"],
+          "summary": "Lista tipos de component tcba",
+          "description": "Lista tipos de componet tbca sistemicas",
+          "responses": {
+            "200": {
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "example": {
+                      "data": [
+                        {
+                          "id": "9c08e165-ff13-4104-9553-4c38ec9380a0",
+                          "componentName": "energia"
+                        },
+                        {
+                          "id": "9e479d2b-2d02-4d75-9ca2-4f79ce082965",
+                          "componentName": "proteina"
+                        },
+                        {
+                          "id": "a1c02957-1837-4a8b-b2e3-15ebd0382dce",
+                          "componentName": "carboidrato"
+                        },
+                        {
+                          "id": "4cfc6fac-3add-45ed-ba63-13e871fe8bbe",
+                          "componentName": "gordura saturada"
+                        }
+                      ],
+                      "total": 4
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "component-tbca/{id}": {
+        "get": {
+          "tags":["component-tbca"],
+          "summary": "Retorna um tipo de produção",
+          "description": "Retonar um tipo de produção pelo id",
+          "parameters": [
+            {
+              "in": "params",
+              "name": "id",
+              "description": "Id do ingrediente",
+              "required": true,
+              "explode": true,
+              "schema": {
+                "type": "string",
+                "example": "095472a1-f1c9-401c-a956-73a8213dd975"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "example": {
+                      "id": "9e479d2b-2d02-4d75-9ca2-4f79ce082965",
+                      "componentName": "proteina"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/food-tbca": {
+        "post": {
+          "tags":["tbca"],
+          "summary": "Criar tabela tbca para alimentos",
+          "description": "Rota para criar tbca para alimentos",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "foodId": "095472a1-f1c9-401c-a956-73a8213dd975",
+                    "unity": "g",
+                    "valueBy100g": 123,
+                    "componentTBCAId": "9e479d2b-2d02-4d75-9ca2-4f79ce082965"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "food-tbca/{foodId}": {
+        "get": {
+          "tags":["tbca"],
+          "summary": "Retorna tabela tbca de um alimento",
+          "description": "Rota para retornar tabela tbca de um alimento",
+          "parameters": [
+            {
+              "in": "params",
+              "name": "fooId",
+              "description": "Id do alimento",
+              "required": true,
+              "explode": true,
+              "schema": {
+                "type": "string",
+                "example": "095472a1-f1c9-401c-a956-73a8213dd975"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "example": {    
+                      "id": "ec6c3f84-733d-4df1-8ac0-5e8eeb6c67eb",
+                      "foodId": "095472a1-f1c9-401c-a956-73a8213dd975",
+                      "componentTBCAId": "9e479d2b-2d02-4d75-9ca2-4f79ce082965",
+                      "unity": "g",
+                      "valueBy100g": 123
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "patch": {
+          "tags": ["tbca"],
+          "summary": "Atualiza tabela tbca de um alimento.",
+          "description": "Rota para atualizar tabela tbca de uma alimento",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example":{
+                    "id": "18e7dab2-0b23-4be4-a574-c091fbb79314",
+                    "foodId": "095472a1-f1c9-401c-a956-73a8213dd975",
+                    "componentTBCAId": "9e479d2b-2d02-4d75-9ca2-4f79ce082965",
+                    "unity": "g",
+                    "valueBy100g": 123
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/productionchain": {
+        "post": {
+          "tags":["productionchain"],
+          "summary": "Criar cadeia de produção",
+          "description": "Rota para criar cadeia de produção. rota mais importante do sistema para usa-la é necessario utililzar as apis anteriores.",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "description": "producção de arroz",
+                    "name": "arroz tipo 1",
+                    "foodId": "095472a1-f1c9-401c-a956-73a8213dd975",
+                    "ingredientIds": [
+                       "3e9474e0-bb81-42e7-8721-fbf957f1b9b5",
+                      "835a8bb4-bf6b-4b3e-a191-9ca7bb3c19a1"
+                    ],
+                    "startDateTime": "2022-10-25T18:59:34Z",
+                    "providerIds": [
+                      "c34760d0-0577-40a4-8031-2f30b64d7494",
+                      "b2655475-75ca-4210-9b93-2958d3bbe0ff"
+                    ],
+                    "quantity": 1000,
+                    "productionTypeId": "d1b4b9ff-5da1-4fad-9b20-f7146026666a"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "get": {
+          "tags": ["productionchain"],
+          "summary": "Lista cadeia de produção",
+          "description": "Lista cadeia de produção de uma empresa",
+          "responses": {
+            "200": {
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "example": {
+                      "total": 4,
+                      "data": [
+                        {
+                          "id": "14ce3162-4895-4174-9fef-102abbb860a5",
+                          "companyId": "2363617f-fe8c-4674-8297-af1d08db49fb",
+                          "productionTypeId": "d1b4b9ff-5da1-4fad-9b20-f7146026666a",
+                          "name": "arroz tipo 1",
+                          "description": "producção de arroz",
+                          "quantity": 1000,
+                          "active": true,
+                          "startDateTime": "2022-10-25T18:59:34.000Z",
+                          "endDateTime": null,
+                          "createdAt": "2022-12-02T02:53:15.000Z",
+                          "updatedAt": null,
+                          "foodId": "095472a1-f1c9-401c-a956-73a8213dd975",
+                          "Fabrication": [
+                    
+                          ],
+                          "productiontype": {
+                            "id": "d1b4b9ff-5da1-4fad-9b20-f7146026666a",
+                            "name": "test"
+                          },
+                          "food": {
+                            "id": "095472a1-f1c9-401c-a956-73a8213dd975",
+                            "name": "rucula",
+                            "description": "alface rocha horganica",
+                            "id_company": "2363617f-fe8c-4674-8297-af1d08db49fb",
+                            "id_foodtype": "0dac1824-24ca-42ce-9620-5bfb0d27bc7c",
+                            "active": true,
+                            "created_at": "2022-12-01T23:55:11.000Z",
+                            "updated_at": null
+                          },
+                          "ingredientProductionChain": [
+                    
+                          ],
+                          "providerProductionChain": [
+                    
+                          ]
+                        },
+                        {
+                          "id": "968962f0-8d4f-4473-91f1-b686ca9b2d1f",
+                          "companyId": "2363617f-fe8c-4674-8297-af1d08db49fb",
+                          "productionTypeId": "d1b4b9ff-5da1-4fad-9b20-f7146026666a",
+                          "name": "arroz tipo 1",
+                          "description": "producção de arroz",
+                          "quantity": 1000,
+                          "active": true,
+                          "startDateTime": "2022-10-25T18:59:34.000Z",
+                          "endDateTime": null,
+                          "createdAt": "2022-12-02T02:55:27.000Z",
+                          "updatedAt": null,
+                          "foodId": "095472a1-f1c9-401c-a956-73a8213dd975",
+                          "Fabrication": [
+                    
+                          ],
+                          "productiontype": {
+                            "id": "d1b4b9ff-5da1-4fad-9b20-f7146026666a",
+                            "name": "test"
+                          },
+                          "food": {
+                            "id": "095472a1-f1c9-401c-a956-73a8213dd975",
+                            "name": "rucula",
+                            "description": "alface rocha horganica",
+                            "id_company": "2363617f-fe8c-4674-8297-af1d08db49fb",
+                            "id_foodtype": "0dac1824-24ca-42ce-9620-5bfb0d27bc7c",
+                            "active": true,
+                            "created_at": "2022-12-01T23:55:11.000Z",
+                            "updated_at": null
+                          },
+                          "ingredientProductionChain": [
+                            {
+                              "productionChainId": "968962f0-8d4f-4473-91f1-b686ca9b2d1f",
+                              "ingredientId": "3e9474e0-bb81-42e7-8721-fbf957f1b9b5"
+                            },
+                            {
+                              "productionChainId": "968962f0-8d4f-4473-91f1-b686ca9b2d1f",
+                              "ingredientId": "835a8bb4-bf6b-4b3e-a191-9ca7bb3c19a1"
+                            }
+                          ],
+                          "providerProductionChain": [
+                            {
+                              "productionChainId": "968962f0-8d4f-4473-91f1-b686ca9b2d1f",
+                              "providerId": "b2655475-75ca-4210-9b93-2958d3bbe0ff"
+                            }
+                          ]
+                        },
+                        {
+                          "id": "b1be23b6-10cb-449c-8c8e-ac2482971c29",
+                          "companyId": "2363617f-fe8c-4674-8297-af1d08db49fb",
+                          "productionTypeId": "d1b4b9ff-5da1-4fad-9b20-f7146026666a",
+                          "name": "arroz tipo 1",
+                          "description": "producção de arroz",
+                          "quantity": 1000,
+                          "active": true,
+                          "startDateTime": "2022-10-25T18:59:34.000Z",
+                          "endDateTime": null,
+                          "createdAt": "2022-12-04T03:02:48.000Z",
+                          "updatedAt": null,
+                          "foodId": "095472a1-f1c9-401c-a956-73a8213dd975",
+                          "Fabrication": [
+                    
+                          ],
+                          "productiontype": {
+                            "id": "d1b4b9ff-5da1-4fad-9b20-f7146026666a",
+                            "name": "test"
+                          },
+                          "food": {
+                            "id": "095472a1-f1c9-401c-a956-73a8213dd975",
+                            "name": "rucula",
+                            "description": "alface rocha horganica",
+                            "id_company": "2363617f-fe8c-4674-8297-af1d08db49fb",
+                            "id_foodtype": "0dac1824-24ca-42ce-9620-5bfb0d27bc7c",
+                            "active": true,
+                            "created_at": "2022-12-01T23:55:11.000Z",
+                            "updated_at": null
+                          },
+                          "ingredientProductionChain": [
+                            {
+                              "productionChainId": "b1be23b6-10cb-449c-8c8e-ac2482971c29",
+                              "ingredientId": "3e9474e0-bb81-42e7-8721-fbf957f1b9b5"
+                            },
+                            {
+                              "productionChainId": "b1be23b6-10cb-449c-8c8e-ac2482971c29",
+                              "ingredientId": "835a8bb4-bf6b-4b3e-a191-9ca7bb3c19a1"
+                            }
+                          ],
+                          "providerProductionChain": [
+                            {
+                              "productionChainId": "b1be23b6-10cb-449c-8c8e-ac2482971c29",
+                              "providerId": "b2655475-75ca-4210-9b93-2958d3bbe0ff"
+                            }
+                          ]
+                        },
+                        {
+                          "id": "3001092f-ca1f-4427-ab40-c0dc84c0aaf9",
+                          "companyId": "2363617f-fe8c-4674-8297-af1d08db49fb",
+                          "productionTypeId": "d1b4b9ff-5da1-4fad-9b20-f7146026666a",
+                          "name": "arroz tipo 1",
+                          "description": "producção de arroz",
+                          "quantity": 1000,
+                          "active": true,
+                          "startDateTime": "2022-10-25T18:59:34.000Z",
+                          "endDateTime": null,
+                          "createdAt": "2022-12-04T03:02:49.000Z",
+                          "updatedAt": null,
+                          "foodId": "095472a1-f1c9-401c-a956-73a8213dd975",
+                          "Fabrication": [
+                    
+                          ],
+                          "productiontype": {
+                            "id": "d1b4b9ff-5da1-4fad-9b20-f7146026666a",
+                            "name": "test"
+                          },
+                          "food": {
+                            "id": "095472a1-f1c9-401c-a956-73a8213dd975",
+                            "name": "rucula",
+                            "description": "alface rocha horganica",
+                            "id_company": "2363617f-fe8c-4674-8297-af1d08db49fb",
+                            "id_foodtype": "0dac1824-24ca-42ce-9620-5bfb0d27bc7c",
+                            "active": true,
+                            "created_at": "2022-12-01T23:55:11.000Z",
+                            "updated_at": null
+                          },
+                          "ingredientProductionChain": [
+                            {
+                              "productionChainId": "3001092f-ca1f-4427-ab40-c0dc84c0aaf9",
+                              "ingredientId": "3e9474e0-bb81-42e7-8721-fbf957f1b9b5"
+                            },
+                            {
+                              "productionChainId": "3001092f-ca1f-4427-ab40-c0dc84c0aaf9",
+                              "ingredientId": "835a8bb4-bf6b-4b3e-a191-9ca7bb3c19a1"
+                            }
+                          ],
+                          "providerProductionChain": [
+                            {
+                              "productionChainId": "3001092f-ca1f-4427-ab40-c0dc84c0aaf9",
+                              "providerId": "b2655475-75ca-4210-9b93-2958d3bbe0ff"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "productionchain/{id}": {
+        "get": {
+          "tags":["productionchain"],
+          "summary": "Retorna uma cadeia de produção",
+          "description": "Retonar uma cadeia de produção pelo id",
+          "parameters": [
+            {
+              "in": "params",
+              "name": "id",
+              "description": "Id da cadeia de produção",
+              "required": true,
+              "explode": true,
+              "schema": {
+                "type": "string",
+                "example": "095472a1-f1c9-401c-a956-73a8213dd975"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "example": {
+                      "id": "3001092f-ca1f-4427-ab40-c0dc84c0aaf9",
+                      "name": "arroz tipo 1",
+                      "description": "producção de arroz",
+                      "endDateTime": null,
+                      "startDateTime": "2022-10-25T18:59:34.000Z",
+                      "quantity": 1000,
+                      "interventions": [],
+                      "Fabrication": [],
+                      "productiontype": {
+                        "id": "d1b4b9ff-5da1-4fad-9b20-f7146026666a",
+                        "name": "test"
+                      },
+                      "food": {
+                        "id": "095472a1-f1c9-401c-a956-73a8213dd975",
+                        "description": "alface rocha horganica",
+                        "name": "rucula",
+                        "foodtype": {
+                          "id": "0dac1824-24ca-42ce-9620-5bfb0d27bc7c",
+                          "type": "Hortaliças"
+                        }
+                      },
+                      "ingredientProductionChain": [
+                        {
+                          "ingredient": {
+                            "id": "3e9474e0-bb81-42e7-8721-fbf957f1b9b5",
+                            "name": "acuçar 2",
+                            "description": "test ingredient 2",
+                            "vegan": true,
+                            "ingredientAllergic": []
+                          }
+                        },
+                        {
+                          "ingredient": {
+                            "id": "835a8bb4-bf6b-4b3e-a191-9ca7bb3c19a1",
+                            "name": "sucarose",
+                            "description": "sucarose",
+                            "vegan": true,
+                            "ingredientAllergic": [
+                              {
+                                "allergic": {
+                                  "id": "08d631c5-c070-494f-8ac1-4bcf0f2a8e07",
+                                  "name": "lactose"
+                                }
+                              },
+                              {
+                                "allergic": {
+                                  "id": "c4c4aebc-91c9-4aee-82aa-8d8c0926d4f4",
+                                  "name": "gluten"
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      ],
+                      "providerProductionChain": [
+                        {
+                          "provider": {
+                            "id": "b2655475-75ca-4210-9b93-2958d3bbe0ff",
+                            "name": "Terra ltda",
+                            "area": "produção adubos",
+                            "cnpj": "111111111111"
+                          }
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "patch": {
+          "tags": ["productionchain"],
+          "summary": "Atualiza uma cadeia de produção",
+          "description": "Rota para atualizar cadeia de produção",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example":{
+                    "description": "producção de arroz",
+                    "name": "arroz tipo 1",
+                    "foodId": "095472a1-f1c9-401c-a956-73a8213dd975",
+                    "ingredientIds": [
+                       "3e9474e0-bb81-42e7-8721-fbf957f1b9b5",
+                      "835a8bb4-bf6b-4b3e-a191-9ca7bb3c19a1"
+                    ],
+                    "startDateTime": "2022-10-25T18:59:34Z",
+                    "endDateTime": "2022-10-25T18:59:34Z",
+                    "providerIds": [
+                      "c34760d0-0577-40a4-8031-2f30b64d7494",
+                      "b2655475-75ca-4210-9b93-2958d3bbe0ff"
+                    ],
+                    "quantity": 1000,
+                    "productionTypeId": "d1b4b9ff-5da1-4fad-9b20-f7146026666a"
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     }
   }

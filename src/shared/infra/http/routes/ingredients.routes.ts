@@ -16,7 +16,7 @@ const deleteFoodController = new DeleteFoodController();
 ingredientRoutes.post("/", createIngredientController.handle);
 ingredientRoutes.get("/", listIngredientsController.handle);
 ingredientRoutes.get("/:id", getIngredientController.handle);
-ingredientRoutes.patch("/:id", updateIngredientController.handle);
+ingredientRoutes.patch("/", updateIngredientController.handle);
 ingredientRoutes.delete("/:id", deleteFoodController.handle);
 
 export { ingredientRoutes };
